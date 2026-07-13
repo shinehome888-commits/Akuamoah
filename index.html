@@ -415,29 +415,20 @@
             max-height: 500px;
         }
 
-        /* Right-to-left motion animation */
+        /* ABOUT IMAGE MOTION — slides smoothly from right to left and back */
         .about-image img {
-            width: 130%;
+            width: 120%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
-            animation: slideRightToLeft 20s ease-in-out infinite alternate;
-            transition: transform 0.8s ease;
-        }
-
-        .about-image:hover img {
-            animation-play-state: paused;
-            transform: scale(1.05);
+            animation: slideRightToLeft 12s ease-in-out infinite alternate;
         }
 
         @keyframes slideRightToLeft {
             0% {
-                transform: translateX(0%);
-                object-position: left center;
+                transform: translateX(5%);
             }
             100% {
-                transform: translateX(-30%);
-                object-position: right center;
+                transform: translateX(-15%);
             }
         }
 
@@ -584,8 +575,8 @@
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            /* Extra bottom padding so last row's overlay doesn't hide behind footer */
-            padding-bottom: 120px;
+            /* Extra bottom padding so last row buttons never hide behind footer */
+            padding-bottom: 40px;
         }
 
         .gallery-item {
@@ -608,15 +599,15 @@
         }
 
         /* ============================================
-           GALLERY SOCIAL OVERLAY (Love, Like, Share)
+           GALLERY SOCIAL OVERLAY (Love, Like, Comment, Share)
         ============================================ */
         .gallery-overlay {
             position: absolute;
             inset: 0;
             background: linear-gradient(
                 to top,
-                rgba(0, 0, 0, 0.75) 0%,
-                rgba(0, 0, 0, 0.2) 40%,
+                rgba(0, 0, 0, 0.85) 0%,
+                rgba(0, 0, 0, 0.3) 45%,
                 transparent 100%
             );
             display: flex;
@@ -635,21 +626,22 @@
         .gallery-actions {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .action-btn {
             display: flex;
             align-items: center;
             gap: 5px;
-            background: none;
+            background: rgba(0, 0, 0, 0.4);
             border: none;
             cursor: pointer;
             color: var(--white);
             font-family: 'Poppins', sans-serif;
             font-size: 0.75rem;
             font-weight: 400;
-            padding: 6px 8px;
+            padding: 6px 10px;
             border-radius: 20px;
             transition: all 0.3s ease;
             backdrop-filter: blur(4px);
@@ -661,8 +653,8 @@
         }
 
         .action-btn svg {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             transition: all 0.3s ease;
         }
 
@@ -691,11 +683,21 @@
             color: var(--gold);
         }
 
+        /* Comment button */
+        .action-btn.comment-btn:hover svg {
+            fill: var(--gold);
+        }
+
+        .action-btn.comment-btn.active {
+            color: var(--gold);
+        }
+
         /* Share button */
         .action-btn.share-btn:hover svg {
             fill: var(--gold);
         }
 
+        /* Pop animation when clicked */
         @keyframes popIcon {
             0% { transform: scale(1); }
             50% { transform: scale(1.5); }
@@ -707,6 +709,229 @@
         }
 
         /* ============================================
+           COMMENT MODAL
+        ============================================ */
+        .comment-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 2600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 20px;
+        }
+
+        .comment-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .comment-modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .comment-modal.active .comment-modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .comment-modal-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--gray-soft);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .comment-modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--black);
+        }
+
+        .comment-modal-header h3 span {
+            color: var(--gold);
+        }
+
+        .comment-modal-close {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--gray-text);
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+
+        .comment-modal-close:hover {
+            color: var(--black);
+        }
+
+        .comment-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 25px;
+            min-height: 200px;
+            max-height: 50vh;
+        }
+
+        .comment-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .comment-list::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+        }
+
+        .comment-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray-text);
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        .comment-empty svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--gold);
+            margin-bottom: 10px;
+            opacity: 0.6;
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-soft);
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+
+        .comment-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--black);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .comment-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .comment-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 3px;
+        }
+
+        .comment-text {
+            font-size: 0.85rem;
+            color: var(--gray-text);
+            font-weight: 300;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .comment-time {
+            font-size: 0.7rem;
+            color: var(--gray-text);
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        .comment-form {
+            padding: 15px 25px 20px;
+            border-top: 1px solid var(--gray-soft);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-shrink: 0;
+            background: var(--gray-bg);
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--gray-soft);
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            background: var(--white);
+            transition: border-color 0.3s ease;
+            resize: none;
+        }
+
+        .comment-form input:focus,
+        .comment-form textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .comment-form textarea {
+            min-height: 60px;
+            max-height: 100px;
+        }
+
+        .comment-form button {
+            align-self: flex-end;
+            padding: 10px 24px;
+            background: var(--gold);
+            color: var(--black);
+            border: none;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .comment-form button:hover {
+            background: var(--black);
+            color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .comment-form button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ============================================
            LIGHTBOX (Full-Screen Bold Image Viewer)
         ============================================ */
         .lightbox {
@@ -715,16 +940,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.97);
+            background: rgba(0, 0, 0, 0.98);
             z-index: 3000;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.4s ease, visibility 0.4s ease;
-            overflow-y: auto;
         }
 
         .lightbox.active {
@@ -732,19 +955,9 @@
             visibility: visible;
         }
 
-        .lightbox-img-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 20px 10px;
-            flex-shrink: 0;
-            position: relative;
-        }
-
         .lightbox-img {
-            max-width: 95vw;
-            max-height: 65vh;
+            max-width: 98vw;
+            max-height: 95vh;
             width: auto;
             height: auto;
             object-fit: contain;
@@ -753,7 +966,6 @@
             transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
             user-select: none;
             -webkit-user-drag: none;
-            border-radius: 4px;
         }
 
         .lightbox.active .lightbox-img {
@@ -761,11 +973,10 @@
             opacity: 1;
         }
 
-        /* Lightbox nav arrows */
         .lightbox-close {
             position: absolute;
-            top: 10px;
-            right: 15px;
+            top: 25px;
+            right: 30px;
             color: var(--white);
             font-size: 2.5rem;
             font-weight: 200;
@@ -817,16 +1028,16 @@
         }
 
         .lightbox-prev {
-            left: 20px;
+            left: 25px;
         }
 
         .lightbox-next {
-            right: 20px;
+            right: 25px;
         }
 
         .lightbox-counter {
             position: absolute;
-            bottom: 5px;
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
             color: var(--white);
@@ -834,7 +1045,7 @@
             letter-spacing: 3px;
             font-weight: 300;
             background: rgba(0, 0, 0, 0.5);
-            padding: 6px 18px;
+            padding: 8px 20px;
             border-radius: 30px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(212, 175, 55, 0.3);
@@ -843,154 +1054,6 @@
         .lightbox-counter span {
             color: var(--gold);
             font-weight: 500;
-        }
-
-        /* ============================================
-           LIGHTBOX COMMENTS SECTION (Social Media Style)
-        ============================================ */
-        .lightbox-comments {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 15px 20px 30px;
-            flex-shrink: 0;
-        }
-
-        .lightbox-comments-header {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--white);
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .lightbox-comments-header svg {
-            width: 18px;
-            height: 18px;
-            fill: var(--gold);
-        }
-
-        .comments-list {
-            max-height: 150px;
-            overflow-y: auto;
-            margin-bottom: 15px;
-            padding-right: 5px;
-        }
-
-        .comments-list::-webkit-scrollbar {
-            width: 3px;
-        }
-
-        .comments-list::-webkit-scrollbar-thumb {
-            background: var(--gold);
-            border-radius: 10px;
-        }
-
-        .comment-item {
-            display: flex;
-            gap: 10px;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            animation: fadeInUp 0.4s ease-out;
-        }
-
-        .comment-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--gold);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--black);
-            font-weight: 700;
-            font-size: 0.75rem;
-            flex-shrink: 0;
-        }
-
-        .comment-body {
-            flex: 1;
-        }
-
-        .comment-user {
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--gold);
-        }
-
-        .comment-text {
-            font-size: 0.82rem;
-            color: rgba(255, 255, 255, 0.85);
-            font-weight: 300;
-            line-height: 1.5;
-            margin-top: 3px;
-        }
-
-        .comment-time {
-            font-size: 0.65rem;
-            color: rgba(255, 255, 255, 0.35);
-            margin-top: 4px;
-            letter-spacing: 0.5px;
-        }
-
-        .no-comments {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.35);
-            font-size: 0.8rem;
-            font-weight: 300;
-            padding: 20px 0;
-            font-style: italic;
-        }
-
-        .comment-form {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .comment-input {
-            flex: 1;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 30px;
-            color: var(--white);
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.82rem;
-            font-weight: 300;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        .comment-input::placeholder {
-            color: rgba(255, 255, 255, 0.35);
-        }
-
-        .comment-input:focus {
-            border-color: var(--gold);
-        }
-
-        .comment-submit {
-            padding: 10px 20px;
-            background: var(--gold);
-            color: var(--black);
-            border: none;
-            border-radius: 30px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.78rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .comment-submit:hover {
-            background: var(--gold-soft);
-            transform: scale(1.05);
         }
 
         /* ============================================
@@ -1431,7 +1494,8 @@
             .gallery-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
-                padding-bottom: 140px; /* Extra padding for mobile */
+                /* CRITICAL: Extra bottom padding on mobile so last row buttons are never hidden by footer */
+                padding-bottom: 80px;
             }
 
             .about-details {
@@ -1455,16 +1519,6 @@
                 font-size: 1.1rem;
             }
 
-            /* Lightbox mobile adjustments */
-            .lightbox-img-container {
-                padding: 15px 15px 5px;
-            }
-
-            .lightbox-img {
-                max-width: 100vw;
-                max-height: 55vh;
-            }
-
             .lightbox-nav {
                 width: 45px;
                 height: 45px;
@@ -1480,21 +1534,22 @@
             }
 
             .lightbox-close {
-                top: 10px;
-                right: 10px;
+                top: 15px;
+                right: 15px;
                 width: 42px;
                 height: 42px;
                 font-size: 2rem;
             }
 
-            .lightbox-counter {
-                bottom: 0;
-                font-size: 0.75rem;
-                padding: 5px 14px;
+            .lightbox-img {
+                max-width: 100vw;
+                max-height: 85vh;
             }
 
-            .lightbox-comments {
-                padding: 10px 15px 40px;
+            .lightbox-counter {
+                bottom: 15px;
+                font-size: 0.75rem;
+                padding: 6px 16px;
             }
 
             /* Gallery overlay always visible on mobile */
@@ -1502,23 +1557,23 @@
                 opacity: 1;
                 background: linear-gradient(
                     to top,
-                    rgba(0, 0, 0, 0.75) 0%,
-                    transparent 55%
+                    rgba(0, 0, 0, 0.8) 0%,
+                    transparent 50%
                 );
             }
 
             .action-btn {
                 font-size: 0.7rem;
-                padding: 5px 6px;
+                padding: 5px 8px;
             }
 
             .action-btn svg {
-                width: 16px;
-                height: 16px;
+                width: 14px;
+                height: 14px;
             }
 
             .gallery-actions {
-                gap: 10px;
+                gap: 8px;
             }
 
             /* Share FAB mobile */
@@ -1548,12 +1603,28 @@
                 height: 38px;
             }
 
-            .comment-form {
-                flex-direction: column;
+            /* Comment modal mobile */
+            .comment-modal {
+                padding: 10px;
+                align-items: flex-end;
             }
 
-            .comment-submit {
-                width: 100%;
+            .comment-modal-content {
+                max-height: 80vh;
+                border-radius: 20px 20px 0 0;
+            }
+
+            .comment-modal-header {
+                padding: 15px 20px;
+            }
+
+            .comment-list {
+                padding: 15px 20px;
+                min-height: 150px;
+            }
+
+            .comment-form {
+                padding: 12px 20px 15px;
             }
         }
 
@@ -1577,6 +1648,8 @@
                 grid-template-columns: 1fr;
                 max-width: 400px;
                 margin: 0 auto;
+                /* Even more padding on small screens */
+                padding-bottom: 100px;
             }
             
             footer {
@@ -1715,7 +1788,7 @@
     </section>
 
     <!-- ============================================
-         GALLERY PAGE (with Love, Like, Share)
+         GALLERY PAGE (with Love, Like, Comment, Share)
     ============================================ -->
     <section class="page inner-page" id="gallery">
         <div class="section-header">
@@ -1733,6 +1806,10 @@
                         </button>
                         <button class="action-btn like-btn" data-action="like">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn comment-btn" data-action="comment">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
                             <span class="count">0</span>
                         </button>
                         <button class="action-btn share-btn" data-action="share">
@@ -1753,6 +1830,10 @@
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
                             <span class="count">0</span>
                         </button>
+                        <button class="action-btn comment-btn" data-action="comment">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
+                            <span class="count">0</span>
+                        </button>
                         <button class="action-btn share-btn" data-action="share">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                         </button>
@@ -1769,6 +1850,10 @@
                         </button>
                         <button class="action-btn like-btn" data-action="like">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn comment-btn" data-action="comment">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
                             <span class="count">0</span>
                         </button>
                         <button class="action-btn share-btn" data-action="share">
@@ -1789,6 +1874,10 @@
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
                             <span class="count">0</span>
                         </button>
+                        <button class="action-btn comment-btn" data-action="comment">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
+                            <span class="count">0</span>
+                        </button>
                         <button class="action-btn share-btn" data-action="share">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                         </button>
@@ -1805,6 +1894,10 @@
                         </button>
                         <button class="action-btn like-btn" data-action="like">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn comment-btn" data-action="comment">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
                             <span class="count">0</span>
                         </button>
                         <button class="action-btn share-btn" data-action="share">
@@ -1825,6 +1918,10 @@
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
                             <span class="count">0</span>
                         </button>
+                        <button class="action-btn comment-btn" data-action="comment">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
+                            <span class="count">0</span>
+                        </button>
                         <button class="action-btn share-btn" data-action="share">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                         </button>
@@ -1843,6 +1940,10 @@
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
                             <span class="count">0</span>
                         </button>
+                        <button class="action-btn comment-btn" data-action="comment">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
+                            <span class="count">0</span>
+                        </button>
                         <button class="action-btn share-btn" data-action="share">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                         </button>
@@ -1859,6 +1960,10 @@
                         </button>
                         <button class="action-btn like-btn" data-action="like">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn comment-btn" data-action="comment">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
                             <span class="count">0</span>
                         </button>
                         <button class="action-btn share-btn" data-action="share">
@@ -1985,32 +2090,34 @@
     </div>
 
     <!-- ============================================
-         LIGHTBOX MODAL (With Comments)
+         COMMENT MODAL
+    ============================================ -->
+    <div class="comment-modal" id="commentModal">
+        <div class="comment-modal-content">
+            <div class="comment-modal-header">
+                <h3>Comments <span id="commentCountHeader">(0)</span></h3>
+                <button class="comment-modal-close" id="commentModalClose">&times;</button>
+            </div>
+            <div class="comment-list" id="commentList">
+                <!-- Comments will be dynamically inserted here -->
+            </div>
+            <form class="comment-form" id="commentForm">
+                <input type="text" id="commentName" placeholder="Your name (optional)" maxlength="30">
+                <textarea id="commentText" placeholder="Write a comment..." maxlength="300" required></textarea>
+                <button type="submit" id="commentSubmit">Post Comment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================
+         LIGHTBOX MODAL (Bold Full-Screen Viewer)
     ============================================ -->
     <div id="lightbox" class="lightbox">
-        <div class="lightbox-img-container">
-            <span class="lightbox-close" id="lightboxClose">&times;</span>
-            <span class="lightbox-nav lightbox-prev" id="lightboxPrev">&#10094;</span>
-            <img src="" alt="Full view" class="lightbox-img" id="lightboxImg">
-            <span class="lightbox-nav lightbox-next" id="lightboxNext">&#10095;</span>
-            <div class="lightbox-counter"><span id="lightboxCurrent">1</span> / <span id="lightboxTotal">8</span></div>
-        </div>
-        
-        <!-- Comments Section -->
-        <div class="lightbox-comments">
-            <div class="lightbox-comments-header">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
-                <span>Comments</span>
-                <span id="commentCount" style="color: var(--gold);">(0)</span>
-            </div>
-            <div class="comments-list" id="commentsList">
-                <div class="no-comments">No comments yet. Be the first to comment!</div>
-            </div>
-            <div class="comment-form">
-                <input type="text" class="comment-input" id="commentInput" placeholder="Write a comment..." maxlength="280">
-                <button class="comment-submit" id="commentSubmit">Post</button>
-            </div>
-        </div>
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <span class="lightbox-nav lightbox-prev" id="lightboxPrev">&#10094;</span>
+        <img src="" alt="Full view" class="lightbox-img" id="lightboxImg">
+        <span class="lightbox-nav lightbox-next" id="lightboxNext">&#10095;</span>
+        <div class="lightbox-counter"><span id="lightboxCurrent">1</span> / <span id="lightboxTotal">8</span></div>
     </div>
 
     <script>
@@ -2066,7 +2173,7 @@
         });
 
         /* ============================================
-           GALLERY LIGHTBOX WITH COMMENTS
+           GALLERY LIGHTBOX - BOLD FULL-SCREEN VIEWER
         ============================================ */
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
@@ -2075,81 +2182,17 @@
         const lightboxNext = document.getElementById('lightboxNext');
         const lightboxCurrent = document.getElementById('lightboxCurrent');
         const lightboxTotal = document.getElementById('lightboxTotal');
-        const commentsList = document.getElementById('commentsList');
-        const commentInput = document.getElementById('commentInput');
-        const commentSubmit = document.getElementById('commentSubmit');
-        const commentCount = document.getElementById('commentCount');
 
         const galleryImages = Array.from(document.querySelectorAll('.gallery-item img'));
         let currentIndex = 0;
 
         lightboxTotal.textContent = galleryImages.length;
 
-        const COMMENTS_KEY = 'akuamoah_gallery_comments';
-
-        function loadComments() {
-            try {
-                const saved = localStorage.getItem(COMMENTS_KEY);
-                return saved ? JSON.parse(saved) : {};
-            } catch (e) {
-                return {};
-            }
-        }
-
-        function saveComments(comments) {
-            try {
-                localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
-            } catch (e) {}
-        }
-
-        function getRandomFan() {
-            const names = ['Kwame', 'Ama', 'Kofi', 'Yaa', 'Nana', 'Adwoa', 'Kweku', 'Akosua', 'Yaw', 'Abena', 'Efua', 'Kwabena', 'Fan1', 'MusicLover', 'VibesOnly', 'GhanaQueen', 'AccraBoy'];
-            return names[Math.floor(Math.random() * names.length)];
-        }
-
-        function getTimeAgo(dateStr) {
-            const now = new Date();
-            const date = new Date(dateStr);
-            const diff = Math.floor((now - date) / 1000);
-            if (diff < 60) return 'Just now';
-            if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
-            if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
-            return Math.floor(diff / 86400) + 'd ago';
-        }
-
-        function renderComments(imgId) {
-            const comments = loadComments();
-            const imgComments = comments[imgId] || [];
-            
-            commentCount.textContent = `(${imgComments.length})`;
-            
-            if (imgComments.length === 0) {
-                commentsList.innerHTML = '<div class="no-comments">No comments yet. Be the first to comment!</div>';
-                return;
-            }
-
-            commentsList.innerHTML = imgComments.map(c => `
-                <div class="comment-item">
-                    <div class="comment-avatar">${c.user.charAt(0).toUpperCase()}</div>
-                    <div class="comment-body">
-                        <div class="comment-user">${c.user}</div>
-                        <div class="comment-text">${c.text}</div>
-                        <div class="comment-time">${getTimeAgo(c.date)}</div>
-                    </div>
-                </div>
-            `).join('');
-            
-            // Scroll to bottom
-            commentsList.scrollTop = commentsList.scrollHeight;
-        }
-
         function openLightbox(index) {
             currentIndex = index;
-            const imgId = document.querySelectorAll('.gallery-item')[index].dataset.imgId;
             updateLightboxImage();
-            renderComments(imgId);
-            commentInput.value = '';
             lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         function updateLightboxImage() {
@@ -2160,11 +2203,6 @@
                 lightboxImg.src = galleryImages[currentIndex].src;
                 lightboxCurrent.textContent = currentIndex + 1;
                 
-                // Update comments for new image
-                const imgId = document.querySelectorAll('.gallery-item')[currentIndex].dataset.imgId;
-                renderComments(imgId);
-                commentInput.value = '';
-                
                 lightboxImg.onload = () => {
                     lightboxImg.style.opacity = '1';
                     lightboxImg.style.transform = 'scale(1)';
@@ -2174,6 +2212,7 @@
 
         function closeLightbox() {
             lightbox.classList.remove('active');
+            document.body.style.overflow = 'hidden';
         }
 
         function nextImage() {
@@ -2186,36 +2225,7 @@
             updateLightboxImage();
         }
 
-        // Submit comment
-        commentSubmit.addEventListener('click', () => {
-            const text = commentInput.value.trim();
-            if (!text) return;
-            
-            const imgId = document.querySelectorAll('.gallery-item')[currentIndex].dataset.imgId;
-            const comments = loadComments();
-            
-            if (!comments[imgId]) comments[imgId] = [];
-            
-            comments[imgId].push({
-                user: getRandomFan(),
-                text: text,
-                date: new Date().toISOString()
-            });
-            
-            saveComments(comments);
-            renderComments(imgId);
-            commentInput.value = '';
-        });
-
-        // Submit on Enter key
-        commentInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                commentSubmit.click();
-            }
-        });
-
-        // Open lightbox on image click (not on overlay buttons)
+        // Click on image opens lightbox (NOT on the overlay buttons)
         galleryImages.forEach((img, index) => {
             img.addEventListener('click', () => {
                 openLightbox(index);
@@ -2257,31 +2267,45 @@
 
         lightbox.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
             const diff = touchStartX - touchEndX;
-            if (Math.abs(diff) > 50) {
+            if (Math.abs(diff) > swipeThreshold) {
                 if (diff > 0) nextImage();
                 else prevImage();
             }
-        }, { passive: true });
+        }
 
         /* ============================================
-           GALLERY SOCIAL INTERACTIONS (Love, Like, Share)
+           GALLERY SOCIAL INTERACTIONS (Love, Like, Comment, Share)
+           - Counts persist in localStorage
+           - Each image has its own independent counters
         ============================================ */
-        const STATS_KEY = 'akuamoah_gallery_stats';
+        const STORAGE_KEY = 'akuamoah_gallery_stats';
 
+        // Load saved stats from localStorage
         function loadStats() {
             try {
-                const saved = localStorage.getItem(STATS_KEY);
+                const saved = localStorage.getItem(STORAGE_KEY);
                 return saved ? JSON.parse(saved) : {};
-            } catch (e) { return {}; }
+            } catch (e) {
+                return {};
+            }
         }
 
+        // Save stats to localStorage
         function saveStats(stats) {
             try {
-                localStorage.setItem(STATS_KEY, JSON.stringify(stats));
-            } catch (e) {}
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
+            } catch (e) {
+                // Storage unavailable
+            }
         }
 
+        // Initialize all gallery items with their stats
         function initGalleryStats() {
             const stats = loadStats();
             const galleryItems = document.querySelectorAll('.gallery-item');
@@ -2289,32 +2313,45 @@
             galleryItems.forEach(item => {
                 const id = item.dataset.imgId;
                 if (!stats[id]) {
-                    stats[id] = { love: 0, like: 0, userLoved: false, userLiked: false };
+                    stats[id] = { love: 0, like: 0, comments: [], userLoved: false, userLiked: false };
+                }
+                // Ensure comments array exists (for backward compatibility)
+                if (!stats[id].comments) {
+                    stats[id].comments = [];
                 }
 
+                // Update displayed counts
                 const loveBtn = item.querySelector('.love-btn');
                 const likeBtn = item.querySelector('.like-btn');
+                const commentBtn = item.querySelector('.comment-btn');
                 
                 loveBtn.querySelector('.count').textContent = stats[id].love;
                 likeBtn.querySelector('.count').textContent = stats[id].like;
+                commentBtn.querySelector('.count').textContent = stats[id].comments.length;
 
+                // Restore active state if user previously clicked
                 if (stats[id].userLoved) loveBtn.classList.add('active');
                 if (stats[id].userLiked) likeBtn.classList.add('active');
+                if (stats[id].comments.length > 0) commentBtn.classList.add('active');
             });
 
             saveStats(stats);
         }
 
+        // Handle love/like/comment/share button clicks
         document.querySelectorAll('.action-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                e.stopPropagation();
+                e.stopPropagation(); // Prevent lightbox from opening
                 const galleryItem = btn.closest('.gallery-item');
                 const id = galleryItem.dataset.imgId;
                 const action = btn.dataset.action;
                 const stats = loadStats();
 
                 if (!stats[id]) {
-                    stats[id] = { love: 0, like: 0, userLoved: false, userLiked: false };
+                    stats[id] = { love: 0, like: 0, comments: [], userLoved: false, userLiked: false };
+                }
+                if (!stats[id].comments) {
+                    stats[id].comments = [];
                 }
 
                 if (action === 'love') {
@@ -2329,7 +2366,8 @@
                     }
                     btn.querySelector('.count').textContent = stats[id].love;
                     triggerPop(btn);
-                } else if (action === 'like') {
+                } 
+                else if (action === 'like') {
                     if (stats[id].userLiked) {
                         stats[id].like = Math.max(0, stats[id].like - 1);
                         stats[id].userLiked = false;
@@ -2341,7 +2379,13 @@
                     }
                     btn.querySelector('.count').textContent = stats[id].like;
                     triggerPop(btn);
-                } else if (action === 'share') {
+                } 
+                else if (action === 'comment') {
+                    // Open comment modal for this image
+                    openCommentModal(id);
+                }
+                else if (action === 'share') {
+                    // Open share modal for this specific image
                     openShareModal(galleryItem.querySelector('img').src, 'Check out this photo of Akuamoah');
                 }
 
@@ -2349,13 +2393,152 @@
             });
         });
 
+        // Pop animation effect
         function triggerPop(btn) {
             btn.classList.remove('pop');
             void btn.offsetWidth;
             btn.classList.add('pop');
         }
 
+        // Initialize on load
         initGalleryStats();
+
+        /* ============================================
+           COMMENT MODAL FUNCTIONALITY
+        ============================================ */
+        const commentModal = document.getElementById('commentModal');
+        const commentModalClose = document.getElementById('commentModalClose');
+        const commentList = document.getElementById('commentList');
+        const commentForm = document.getElementById('commentForm');
+        const commentName = document.getElementById('commentName');
+        const commentText = document.getElementById('commentText');
+        const commentCountHeader = document.getElementById('commentCountHeader');
+
+        let currentCommentImgId = null;
+
+        function openCommentModal(imgId) {
+            currentCommentImgId = imgId;
+            renderComments();
+            commentModal.classList.add('active');
+            commentText.focus();
+        }
+
+        function closeCommentModal() {
+            commentModal.classList.remove('active');
+            currentCommentImgId = null;
+            commentName.value = '';
+            commentText.value = '';
+        }
+
+        function renderComments() {
+            const stats = loadStats();
+            const comments = (stats[currentCommentImgId] && stats[currentCommentImgId].comments) || [];
+            
+            commentCountHeader.textContent = `(${comments.length})`;
+
+            if (comments.length === 0) {
+                commentList.innerHTML = `
+                    <div class="comment-empty">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
+                        <p>No comments yet.<br>Be the first to say something!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            commentList.innerHTML = comments.map(c => {
+                const initial = (c.name || 'Fan').charAt(0).toUpperCase();
+                const displayName = c.name || 'Anonymous Fan';
+                return `
+                    <div class="comment-item">
+                        <div class="comment-avatar">${initial}</div>
+                        <div class="comment-body">
+                            <div class="comment-name">${escapeHtml(displayName)}</div>
+                            <div class="comment-text">${escapeHtml(c.text)}</div>
+                            <div class="comment-time">${c.time}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Scroll to bottom of comment list
+            commentList.scrollTop = commentList.scrollHeight;
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Format time as "Just now", "X min ago", etc.
+        function formatTime(timestamp) {
+            const now = Date.now();
+            const diff = Math.floor((now - timestamp) / 1000);
+            
+            if (diff < 10) return 'Just now';
+            if (diff < 60) return `${diff}s ago`;
+            if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+            if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+            return `${Math.floor(diff / 86400)}d ago`;
+        }
+
+        // Handle comment submission
+        commentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = commentText.value.trim();
+            if (!text || !currentCommentImgId) return;
+
+            const stats = loadStats();
+            if (!stats[currentCommentImgId]) {
+                stats[currentCommentImgId] = { love: 0, like: 0, comments: [], userLoved: false, userLiked: false };
+            }
+            if (!stats[currentCommentImgId].comments) {
+                stats[currentCommentImgId].comments = [];
+            }
+
+            const newComment = {
+                name: commentName.value.trim() || '',
+                text: text,
+                time: Date.now()
+            };
+
+            stats[currentCommentImgId].comments.push(newComment);
+            saveStats(stats);
+
+            // Update comment count on the gallery button
+            const galleryItem = document.querySelector(`.gallery-item[data-img-id="${currentCommentImgId}"]`);
+            if (galleryItem) {
+                const commentBtn = galleryItem.querySelector('.comment-btn');
+                commentBtn.querySelector('.count').textContent = stats[currentCommentImgId].comments.length;
+                commentBtn.classList.add('active');
+            }
+
+            // Clear input and re-render
+            commentText.value = '';
+            renderComments();
+        });
+
+        // Close comment modal
+        commentModalClose.addEventListener('click', closeCommentModal);
+        commentModal.addEventListener('click', (e) => {
+            if (e.target === commentModal) closeCommentModal();
+        });
+
+        // Update relative times every 30 seconds
+        setInterval(() => {
+            if (commentModal.classList.contains('active')) {
+                const timeEls = commentList.querySelectorAll('.comment-time');
+                const stats = loadStats();
+                const comments = (stats[currentCommentImgId] && stats[currentCommentImgId].comments) || [];
+                timeEls.forEach((el, i) => {
+                    if (comments[i]) {
+                        el.textContent = formatTime(comments[i].time);
+                    }
+                });
+            }
+        }, 30000);
 
         /* ============================================
            SHARE FUNCTIONALITY (Site-wide + per image)
@@ -2396,6 +2579,7 @@
         }
 
         shareFab.addEventListener('click', () => openShareModal());
+
         shareModalClose.addEventListener('click', closeShareModal);
         shareModal.addEventListener('click', (e) => {
             if (e.target === shareModal) closeShareModal();
