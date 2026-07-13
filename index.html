@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Akuamoah - Ghanaian Singer, Songwriter & Performer. Born in Kumasi, Based in Accra.">
+    <meta name="description" content="Akuamoah - Ghanaian Singer, Songwriter & Performer. Born and Raised in Accra.">
     <title>Akuamoah — Singer | Songwriter | Performer</title>
 
     <!-- Google Fonts: Poppins -->
@@ -586,29 +586,112 @@
             transition: transform 0.6s ease;
         }
 
-        .gallery-item::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(17, 17, 17, 0.4);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
         .gallery-item:hover img {
             transform: scale(1.08);
         }
 
-        .gallery-item:hover::after {
+        /* ============================================
+           GALLERY SOCIAL OVERLAY (Love, Like, Share)
+        ============================================ */
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0.75) 0%,
+                rgba(0, 0, 0, 0.2) 40%,
+                transparent 100%
+            );
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 15px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 3;
+        }
+
+        .gallery-item:hover .gallery-overlay {
             opacity: 1;
+        }
+
+        .gallery-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--white);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 400;
+            padding: 6px 8px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.08);
+        }
+
+        .action-btn svg {
+            width: 18px;
+            height: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn .count {
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Love button - turns red when active */
+        .action-btn.love-btn.active svg {
+            fill: #ff3b5c;
+            filter: drop-shadow(0 0 6px rgba(255, 59, 92, 0.6));
+        }
+
+        .action-btn.love-btn.active {
+            color: #ff3b5c;
+        }
+
+        /* Like button - turns gold when active */
+        .action-btn.like-btn.active svg {
+            fill: var(--gold);
+            filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.6));
+        }
+
+        .action-btn.like-btn.active {
+            color: var(--gold);
+        }
+
+        /* Share button */
+        .action-btn.share-btn:hover svg {
+            fill: var(--gold);
+        }
+
+        /* Pop animation when clicked */
+        @keyframes popIcon {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1); }
+        }
+
+        .action-btn.pop svg {
+            animation: popIcon 0.4s ease;
         }
 
         /* ============================================
            LIGHTBOX (Full-Screen Bold Image Viewer)
-           - Near-black backdrop (no blur) for pure focus
-           - Image fills up to 98% of the screen
-           - Navigation arrows for easy browsing
-           - Counter showing current image position
         ============================================ */
         .lightbox {
             position: fixed;
@@ -631,7 +714,6 @@
             visibility: visible;
         }
 
-        /* The image itself - BOLD, FULL, UNOBSTRUCTED */
         .lightbox-img {
             max-width: 98vw;
             max-height: 95vh;
@@ -650,7 +732,6 @@
             opacity: 1;
         }
 
-        /* Close button - top right, elegant */
         .lightbox-close {
             position: absolute;
             top: 25px;
@@ -678,7 +759,6 @@
             background: rgba(0, 0, 0, 0.7);
         }
 
-        /* Navigation arrows */
         .lightbox-nav {
             position: absolute;
             top: 50%;
@@ -714,7 +794,6 @@
             right: 25px;
         }
 
-        /* Image counter (e.g., "3 / 8") */
         .lightbox-counter {
             position: absolute;
             bottom: 25px;
@@ -903,6 +982,199 @@
         }
 
         /* ============================================
+           FLOATING SHARE BUTTON (All Pages)
+        ============================================ */
+        .share-fab {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 55px;
+            height: 55px;
+            background: var(--gold);
+            color: var(--black);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 500;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+            transition: var(--transition);
+            border: none;
+        }
+
+        .share-fab:hover {
+            transform: scale(1.1) translateY(-3px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.6);
+        }
+
+        .share-fab svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--black);
+        }
+
+        /* Pulse ring animation */
+        .share-fab::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            opacity: 0;
+            animation: fabPulse 2.5s infinite;
+        }
+
+        @keyframes fabPulse {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+
+        /* ============================================
+           SHARE MODAL
+        ============================================ */
+        .share-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 2500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .share-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .share-modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px 35px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .share-modal.active .share-modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .share-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--gray-text);
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+
+        .share-modal-close:hover {
+            color: var(--black);
+        }
+
+        .share-modal h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            color: var(--black);
+        }
+
+        .share-modal p {
+            font-size: 0.85rem;
+            color: var(--gray-text);
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        .share-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .share-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--gray-bg);
+            border: none;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .share-option:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .share-option .share-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .share-option .share-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--white);
+        }
+
+        .share-option span {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: var(--black);
+        }
+
+        /* Brand colors for share options */
+        .share-whatsapp .share-icon { background: #25D366; }
+        .share-facebook .share-icon { background: #1877F2; }
+        .share-x .share-icon { background: #000000; }
+        .share-copy .share-icon { background: var(--gold); }
+
+        .copy-feedback {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--black);
+            color: var(--gold);
+            border-radius: 30px;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .copy-feedback.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================================
            PAGE TRANSITION ANIMATION
         ============================================ */
         .page.active .section-header,
@@ -1006,7 +1278,6 @@
                 font-size: 1.1rem;
             }
 
-            /* Lightbox mobile adjustments */
             .lightbox-nav {
                 width: 45px;
                 height: 45px;
@@ -1038,6 +1309,57 @@
                 bottom: 15px;
                 font-size: 0.75rem;
                 padding: 6px 16px;
+            }
+
+            /* Gallery overlay always visible on mobile */
+            .gallery-overlay {
+                opacity: 1;
+                background: linear-gradient(
+                    to top,
+                    rgba(0, 0, 0, 0.7) 0%,
+                    transparent 50%
+                );
+            }
+
+            .action-btn {
+                font-size: 0.7rem;
+                padding: 5px 6px;
+            }
+
+            .action-btn svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            .gallery-actions {
+                gap: 10px;
+            }
+
+            /* Share FAB mobile */
+            .share-fab {
+                bottom: 95px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .share-fab svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            /* Share modal mobile */
+            .share-modal-content {
+                padding: 35px 25px;
+            }
+
+            .share-options {
+                gap: 10px;
+            }
+
+            .share-option .share-icon {
+                width: 38px;
+                height: 38px;
             }
         }
 
@@ -1109,7 +1431,7 @@
         <div class="home-content">
             <p class="hero-subtitle">Singer • Songwriter • Performer</p>
             <h1 class="hero-title">AKUAMOAH</h1>
-            <p class="hero-location">Born in Kumasi • Based in Accra</p>
+            <p class="hero-location">Born &amp; Raised in Accra</p>
             <p class="hero-tagline">"Music that speaks to the heart."</p>
             <div class="hero-buttons">
                 <a class="btn btn-primary" data-page="music">Listen Now</a>
@@ -1133,15 +1455,15 @@
             <div class="about-text">
                 <h3>A Voice from <span>Ghana</span></h3>
                 <p>
-                    Akuamoah is a Ghanaian singer, songwriter, and performer whose music blends the soulful rhythms of her homeland with contemporary elegance. Born in the historic city of Kumasi and now based in Accra, she crafts songs that carry emotion, culture, and story.
+                    Akuamoah is a Ghanaian singer, songwriter, and performer whose music blends the soulful rhythms of her homeland with contemporary elegance. Born and raised in the vibrant city of Accra, she crafts songs that carry emotion, culture, and story.
                 </p>
                 <p>
                     With every note, she invites listeners into a world where melody meets meaning — a world shaped by heritage, heart, and the timeless beauty of African sound.
                 </p>
                 <div class="about-details">
                     <div class="about-detail">
-                        <h4>Born</h4>
-                        <p>Kumasi, Ghana</p>
+                        <h4>Born &amp; Raised</h4>
+                        <p>Accra, Ghana</p>
                     </div>
                     <div class="about-detail">
                         <h4>Based</h4>
@@ -1199,7 +1521,7 @@
     </section>
 
     <!-- ============================================
-         GALLERY PAGE
+         GALLERY PAGE (with Love, Like, Share)
     ============================================ -->
     <section class="page inner-page" id="gallery">
         <div class="section-header">
@@ -1207,29 +1529,149 @@
             <h2 class="section-title">Gallery</h2>
         </div>
         <div class="gallery-grid">
-            <div class="gallery-item">
+            <div class="gallery-item" data-img-id="img1">
                 <img src="https://i.ibb.co/hwKpyqW/Chat-GPT-Image-Jul-13-2026-12-09-38-AM.png" alt="Gallery 1">
+                <div class="gallery-overlay">
+                    <div class="gallery-actions">
+                        <button class="action-btn love-btn" data-action="love">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn like-btn" data-action="like">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn share-btn" data-action="share">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-img-id="img2">
                 <img src="https://i.ibb.co/ks36J59D/IMG-9043.jpg" alt="Gallery 2">
+                <div class="gallery-overlay">
+                    <div class="gallery-actions">
+                        <button class="action-btn love-btn" data-action="love">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn like-btn" data-action="like">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn share-btn" data-action="share">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-img-id="img3">
                 <img src="https://i.ibb.co/0RV0hCHr/IMG-9044.jpg" alt="Gallery 3">
+                <div class="gallery-overlay">
+                    <div class="gallery-actions">
+                        <button class="action-btn love-btn" data-action="love">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn like-btn" data-action="like">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn share-btn" data-action="share">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-img-id="img4">
                 <img src="https://i.ibb.co/MyfXfbtR/IMG-9045.jpg" alt="Gallery 4">
+                <div class="gallery-overlay">
+                    <div class="gallery-actions">
+                        <button class="action-btn love-btn" data-action="love">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn like-btn" data-action="like">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn share-btn" data-action="share">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-img-id="img5">
                 <img src="https://i.ibb.co/9HDw6JgT/IMG-9046.jpg" alt="Gallery 5">
+                <div class="gallery-overlay">
+                    <div class="gallery-actions">
+                        <button class="action-btn love-btn" data-action="love">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn like-btn" data-action="like">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn share-btn" data-action="share">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-img-id="img6">
                 <img src="https://i.ibb.co/dw3WxwmT/IMG-9047.jpg" alt="Gallery 6">
+                <div class="gallery-overlay">
+                    <div class="gallery-actions">
+                        <button class="action-btn love-btn" data-action="love">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn like-btn" data-action="like">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn share-btn" data-action="share">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-img-id="img7">
                 <img src="https://i.ibb.co/TM2fkqFS/IMG-9048.jpg" alt="Gallery 7">
+                <div class="gallery-overlay">
+                    <div class="gallery-actions">
+                        <button class="action-btn love-btn" data-action="love">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn like-btn" data-action="like">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn share-btn" data-action="share">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" data-img-id="img8">
                 <img src="https://i.ibb.co/kgJkzygB/Chat-GPT-Image-Jul-13-2026-12-12-19-AM.png" alt="Gallery 8">
+                <div class="gallery-overlay">
+                    <div class="gallery-actions">
+                        <button class="action-btn love-btn" data-action="love">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn like-btn" data-action="like">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn share-btn" data-action="share">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1259,37 +1701,31 @@
             </a>
             
             <div class="social-icons">
-                <!-- TikTok -->
                 <a href="#" aria-label="TikTok">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.1z"/>
                     </svg>
                 </a>
-                <!-- Facebook -->
                 <a href="#" aria-label="Facebook">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/>
                     </svg>
                 </a>
-                <!-- Instagram -->
                 <a href="#" aria-label="Instagram">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2-.1-1.2-.1-1.6-.1-4.8s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4 1.2-.1 1.6-.1 4.8-.1M12 0C8.7 0 8.3 0 7.1.1 5.8.1 5 .3 4.2.6c-.8.3-1.5.7-2.2 1.4C1.3 2.7.9 3.4.6 4.2.3 5 .1 5.8.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.1 1.3.2 2.1.5 2.9.3.8.7 1.5 1.4 2.2.7.7 1.4 1.1 2.2 1.4.8.3 1.6.5 2.9.5 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c1.3-.1 2.1-.2 2.9-.5.8-.3 1.5-.7 2.2-1.4.7-.7 1.1-1.4 1.4-2.2.3-.8.5-1.6.5-2.9.1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.1-1.3-.2-2.1-.5-2.9-.3-.8-.7-1.5-1.4-2.2C21.3 1.3 20.6.9 19.8.6 19 .3 18.2.1 16.9.1 15.7 0 15.3 0 12 0zm0 5.8c-3.4 0-6.2 2.8-6.2 6.2s2.8 6.2 6.2 6.2 6.2-2.8 6.2-6.2S15.4 5.8 12 5.8zm0 10.2c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm6.4-11.8c-.8 0-1.4.6-1.4 1.4s.6 1.4 1.4 1.4 1.4-.6 1.4-1.4-.6-1.4-1.4-1.4z"/>
                     </svg>
                 </a>
-                <!-- YouTube -->
                 <a href="#" aria-label="YouTube">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M23.5 6.2c-.3-1-1-1.8-2-2.1C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.5.6c-1 .3-1.7 1.1-2 2.1C0 8.1 0 12 0 12s0 3.9.5 5.8c.3 1 1 1.8 2 2.1 1.8.6 9.5.6 9.5.6s7.7 0 9.5-.6c1-.3 1.7-1.1 2-2.1.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.5 15.5v-7l6.5 3.5-6.5 3.5z"/>
                     </svg>
                 </a>
-                <!-- X (Twitter) -->
                 <a href="#" aria-label="X (Twitter)">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                     </svg>
                 </a>
-                <!-- Audiomack -->
                 <a href="#" aria-label="Audiomack">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14H8V8l7 4-7 4z"/>
@@ -1308,11 +1744,54 @@
     </footer>
 
     <!-- ============================================
+         FLOATING SHARE BUTTON (Visible on ALL pages)
+    ============================================ -->
+    <button class="share-fab" id="shareFab" aria-label="Share this website">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+        </svg>
+    </button>
+
+    <!-- ============================================
+         SHARE MODAL
+    ============================================ -->
+    <div class="share-modal" id="shareModal">
+        <div class="share-modal-content">
+            <button class="share-modal-close" id="shareModalClose">&times;</button>
+            <h3>Share Akuamoah</h3>
+            <p>Spread the music — share with your friends!</p>
+            <div class="share-options">
+                <button class="share-option share-whatsapp" data-share="whatsapp">
+                    <div class="share-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    </div>
+                    <span>WhatsApp</span>
+                </button>
+                <button class="share-option share-facebook" data-share="facebook">
+                    <div class="share-icon">
+                        <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+                    </div>
+                    <span>Facebook</span>
+                </button>
+                <button class="share-option share-x" data-share="x">
+                    <div class="share-icon">
+                        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </div>
+                    <span>X</span>
+                </button>
+                <button class="share-option share-copy" data-share="copy">
+                    <div class="share-icon">
+                        <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                    </div>
+                    <span>Copy Link</span>
+                </button>
+            </div>
+            <div class="copy-feedback" id="copyFeedback">✓ Link copied to clipboard!</div>
+        </div>
+    </div>
+
+    <!-- ============================================
          LIGHTBOX MODAL (Bold Full-Screen Viewer)
-         - Pure black backdrop for maximum focus
-         - Image fills the screen boldly
-         - Prev/Next arrows to browse
-         - Counter showing current image
     ============================================ -->
     <div id="lightbox" class="lightbox">
         <span class="lightbox-close" id="lightboxClose">&times;</span>
@@ -1376,8 +1855,6 @@
 
         /* ============================================
            GALLERY LIGHTBOX - BOLD FULL-SCREEN VIEWER
-           Fans can see every detail of each picture
-           and navigate between them easily.
         ============================================ */
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
@@ -1387,14 +1864,11 @@
         const lightboxCurrent = document.getElementById('lightboxCurrent');
         const lightboxTotal = document.getElementById('lightboxTotal');
 
-        // Collect all gallery images in order
         const galleryImages = Array.from(document.querySelectorAll('.gallery-item img'));
         let currentIndex = 0;
 
-        // Set total count
         lightboxTotal.textContent = galleryImages.length;
 
-        // Open lightbox at a specific index
         function openLightbox(index) {
             currentIndex = index;
             updateLightboxImage();
@@ -1402,9 +1876,7 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // Update the displayed image based on currentIndex
         function updateLightboxImage() {
-            // Smooth fade transition when changing images
             lightboxImg.style.opacity = '0';
             lightboxImg.style.transform = 'scale(0.95)';
             
@@ -1412,7 +1884,6 @@
                 lightboxImg.src = galleryImages[currentIndex].src;
                 lightboxCurrent.textContent = currentIndex + 1;
                 
-                // Once loaded, fade back in
                 lightboxImg.onload = () => {
                     lightboxImg.style.opacity = '1';
                     lightboxImg.style.transform = 'scale(1)';
@@ -1420,35 +1891,30 @@
             }, 150);
         }
 
-        // Close lightbox
         function closeLightbox() {
             lightbox.classList.remove('active');
             document.body.style.overflow = 'hidden';
         }
 
-        // Navigate to next image
         function nextImage() {
             currentIndex = (currentIndex + 1) % galleryImages.length;
             updateLightboxImage();
         }
 
-        // Navigate to previous image
         function prevImage() {
             currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
             updateLightboxImage();
         }
 
-        // Attach click handlers to each gallery image
+        // Click on image opens lightbox (NOT on the overlay buttons)
         galleryImages.forEach((img, index) => {
             img.addEventListener('click', () => {
                 openLightbox(index);
             });
         });
 
-        // Close button
         lightboxClose.addEventListener('click', closeLightbox);
 
-        // Navigation arrows
         lightboxNext.addEventListener('click', (e) => {
             e.stopPropagation();
             nextImage();
@@ -1459,27 +1925,20 @@
             prevImage();
         });
 
-        // Click outside image to close
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) {
                 closeLightbox();
             }
         });
 
-        // Keyboard navigation (Arrow keys + Escape)
         document.addEventListener('keydown', (e) => {
             if (!lightbox.classList.contains('active')) return;
-            
-            if (e.key === 'Escape') {
-                closeLightbox();
-            } else if (e.key === 'ArrowRight') {
-                nextImage();
-            } else if (e.key === 'ArrowLeft') {
-                prevImage();
-            }
+            if (e.key === 'Escape') closeLightbox();
+            else if (e.key === 'ArrowRight') nextImage();
+            else if (e.key === 'ArrowLeft') prevImage();
         });
 
-        // Touch/swipe support for mobile
+        // Touch/swipe support
         let touchStartX = 0;
         let touchEndX = 0;
 
@@ -1495,15 +1954,221 @@
         function handleSwipe() {
             const swipeThreshold = 50;
             const diff = touchStartX - touchEndX;
-            
             if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    nextImage(); // Swipe left = next
-                } else {
-                    prevImage(); // Swipe right = previous
-                }
+                if (diff > 0) nextImage();
+                else prevImage();
             }
         }
+
+        /* ============================================
+           GALLERY SOCIAL INTERACTIONS (Love, Like, Share)
+           - Counts persist in localStorage
+           - Each image has its own independent counters
+        ============================================ */
+        const STORAGE_KEY = 'akuamoah_gallery_stats';
+
+        // Load saved stats from localStorage
+        function loadStats() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                return saved ? JSON.parse(saved) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        // Save stats to localStorage
+        function saveStats(stats) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
+            } catch (e) {
+                // Storage unavailable - continue without persistence
+            }
+        }
+
+        // Initialize all gallery items with their stats
+        function initGalleryStats() {
+            const stats = loadStats();
+            const galleryItems = document.querySelectorAll('.gallery-item');
+
+            galleryItems.forEach(item => {
+                const id = item.dataset.imgId;
+                if (!stats[id]) {
+                    stats[id] = { love: 0, like: 0, userLoved: false, userLiked: false };
+                }
+
+                // Update displayed counts
+                const loveBtn = item.querySelector('.love-btn');
+                const likeBtn = item.querySelector('.like-btn');
+                
+                loveBtn.querySelector('.count').textContent = stats[id].love;
+                likeBtn.querySelector('.count').textContent = stats[id].like;
+
+                // Restore active state if user previously clicked
+                if (stats[id].userLoved) loveBtn.classList.add('active');
+                if (stats[id].userLiked) likeBtn.classList.add('active');
+            });
+
+            saveStats(stats);
+        }
+
+        // Handle love/like/share button clicks
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent lightbox from opening
+                const galleryItem = btn.closest('.gallery-item');
+                const id = galleryItem.dataset.imgId;
+                const action = btn.dataset.action;
+                const stats = loadStats();
+
+                if (!stats[id]) {
+                    stats[id] = { love: 0, like: 0, userLoved: false, userLiked: false };
+                }
+
+                if (action === 'love') {
+                    if (stats[id].userLoved) {
+                        // Unlike
+                        stats[id].love = Math.max(0, stats[id].love - 1);
+                        stats[id].userLoved = false;
+                        btn.classList.remove('active');
+                    } else {
+                        // Love
+                        stats[id].love++;
+                        stats[id].userLoved = true;
+                        btn.classList.add('active');
+                    }
+                    btn.querySelector('.count').textContent = stats[id].love;
+                    triggerPop(btn);
+                } 
+                else if (action === 'like') {
+                    if (stats[id].userLiked) {
+                        // Un-like
+                        stats[id].like = Math.max(0, stats[id].like - 1);
+                        stats[id].userLiked = false;
+                        btn.classList.remove('active');
+                    } else {
+                        // Like
+                        stats[id].like++;
+                        stats[id].userLiked = true;
+                        btn.classList.add('active');
+                    }
+                    btn.querySelector('.count').textContent = stats[id].like;
+                    triggerPop(btn);
+                } 
+                else if (action === 'share') {
+                    // Open share modal for this specific image
+                    openShareModal(galleryItem.querySelector('img').src, 'Check out this photo of Akuamoah');
+                }
+
+                saveStats(stats);
+            });
+        });
+
+        // Pop animation effect
+        function triggerPop(btn) {
+            btn.classList.remove('pop');
+            void btn.offsetWidth; // Trigger reflow
+            btn.classList.add('pop');
+        }
+
+        // Initialize on load
+        initGalleryStats();
+
+        /* ============================================
+           SHARE FUNCTIONALITY (Site-wide + per image)
+        ============================================ */
+        const shareFab = document.getElementById('shareFab');
+        const shareModal = document.getElementById('shareModal');
+        const shareModalClose = document.getElementById('shareModalClose');
+        const copyFeedback = document.getElementById('copyFeedback');
+
+        let currentShareUrl = window.location.href;
+        let currentShareText = 'Check out Akuamoah — Ghanaian Singer, Songwriter & Performer. Music that speaks to the heart. 🎶';
+
+        // Open share modal (site-wide or specific image)
+        function openShareModal(imageUrl = null, caption = null) {
+            if (imageUrl) {
+                currentShareUrl = imageUrl;
+                currentShareText = caption || 'Check out this photo of Akuamoah 📸';
+            } else {
+                currentShareUrl = window.location.href;
+                currentShareText = 'Check out Akuamoah — Ghanaian Singer, Songwriter & Performer. Music that speaks to the heart. 🎶';
+            }
+
+            // Try native share API first on mobile
+            if (navigator.share && !imageUrl) {
+                navigator.share({
+                    title: 'Akuamoah',
+                    text: currentShareText,
+                    url: currentShareUrl
+                }).catch(() => {
+                    // User cancelled or error - show modal instead
+                    shareModal.classList.add('active');
+                });
+            } else {
+                shareModal.classList.add('active');
+            }
+        }
+
+        function closeShareModal() {
+            shareModal.classList.remove('active');
+            copyFeedback.classList.remove('show');
+        }
+
+        // Open modal when FAB is clicked
+        shareFab.addEventListener('click', () => openShareModal());
+
+        // Close modal
+        shareModalClose.addEventListener('click', closeShareModal);
+        shareModal.addEventListener('click', (e) => {
+            if (e.target === shareModal) closeShareModal();
+        });
+
+        // Handle share option clicks
+        document.querySelectorAll('.share-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const platform = option.dataset.share;
+                const encodedUrl = encodeURIComponent(currentShareUrl);
+                const encodedText = encodeURIComponent(currentShareText);
+                let shareUrl = '';
+
+                switch (platform) {
+                    case 'whatsapp':
+                        shareUrl = `https://wa.me/?text=${encodedText}%20${encodedUrl}`;
+                        window.open(shareUrl, '_blank');
+                        break;
+                    case 'facebook':
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+                        window.open(shareUrl, '_blank');
+                        break;
+                    case 'x':
+                        shareUrl = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
+                        window.open(shareUrl, '_blank');
+                        break;
+                    case 'copy':
+                        navigator.clipboard.writeText(currentShareUrl).then(() => {
+                            copyFeedback.classList.add('show');
+                            setTimeout(() => copyFeedback.classList.remove('show'), 2500);
+                        }).catch(() => {
+                            // Fallback for older browsers
+                            const tempInput = document.createElement('input');
+                            tempInput.value = currentShareUrl;
+                            document.body.appendChild(tempInput);
+                            tempInput.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(tempInput);
+                            copyFeedback.classList.add('show');
+                            setTimeout(() => copyFeedback.classList.remove('show'), 2500);
+                        });
+                        break;
+                }
+
+                // Close modal after sharing (except copy which shows feedback)
+                if (platform !== 'copy') {
+                    closeShareModal();
+                }
+            });
+        });
 
         /* ============================================
            INITIAL STATE
