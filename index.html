@@ -415,15 +415,30 @@
             max-height: 500px;
         }
 
+        /* Right-to-left motion animation */
         .about-image img {
-            width: 100%;
+            width: 130%;
             height: 100%;
             object-fit: cover;
+            object-position: center;
+            animation: slideRightToLeft 20s ease-in-out infinite alternate;
             transition: transform 0.8s ease;
         }
 
         .about-image:hover img {
+            animation-play-state: paused;
             transform: scale(1.05);
+        }
+
+        @keyframes slideRightToLeft {
+            0% {
+                transform: translateX(0%);
+                object-position: left center;
+            }
+            100% {
+                transform: translateX(-30%);
+                object-position: right center;
+            }
         }
 
         .about-image::before {
@@ -569,6 +584,8 @@
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
+            /* Extra bottom padding so last row's overlay doesn't hide behind footer */
+            padding-bottom: 120px;
         }
 
         .gallery-item {
@@ -679,7 +696,6 @@
             fill: var(--gold);
         }
 
-        /* Pop animation when clicked */
         @keyframes popIcon {
             0% { transform: scale(1); }
             50% { transform: scale(1.5); }
@@ -699,14 +715,16 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.98);
+            background: rgba(0, 0, 0, 0.97);
             z-index: 3000;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: flex-start;
             align-items: center;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.4s ease, visibility 0.4s ease;
+            overflow-y: auto;
         }
 
         .lightbox.active {
@@ -714,9 +732,19 @@
             visibility: visible;
         }
 
+        .lightbox-img-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 20px 10px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
         .lightbox-img {
-            max-width: 98vw;
-            max-height: 95vh;
+            max-width: 95vw;
+            max-height: 65vh;
             width: auto;
             height: auto;
             object-fit: contain;
@@ -725,6 +753,7 @@
             transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
             user-select: none;
             -webkit-user-drag: none;
+            border-radius: 4px;
         }
 
         .lightbox.active .lightbox-img {
@@ -732,10 +761,11 @@
             opacity: 1;
         }
 
+        /* Lightbox nav arrows */
         .lightbox-close {
             position: absolute;
-            top: 25px;
-            right: 30px;
+            top: 10px;
+            right: 15px;
             color: var(--white);
             font-size: 2.5rem;
             font-weight: 200;
@@ -787,16 +817,16 @@
         }
 
         .lightbox-prev {
-            left: 25px;
+            left: 20px;
         }
 
         .lightbox-next {
-            right: 25px;
+            right: 20px;
         }
 
         .lightbox-counter {
             position: absolute;
-            bottom: 25px;
+            bottom: 5px;
             left: 50%;
             transform: translateX(-50%);
             color: var(--white);
@@ -804,7 +834,7 @@
             letter-spacing: 3px;
             font-weight: 300;
             background: rgba(0, 0, 0, 0.5);
-            padding: 8px 20px;
+            padding: 6px 18px;
             border-radius: 30px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(212, 175, 55, 0.3);
@@ -813,6 +843,154 @@
         .lightbox-counter span {
             color: var(--gold);
             font-weight: 500;
+        }
+
+        /* ============================================
+           LIGHTBOX COMMENTS SECTION (Social Media Style)
+        ============================================ */
+        .lightbox-comments {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 15px 20px 30px;
+            flex-shrink: 0;
+        }
+
+        .lightbox-comments-header {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lightbox-comments-header svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--gold);
+        }
+
+        .comments-list {
+            max-height: 150px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            padding-right: 5px;
+        }
+
+        .comments-list::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .comments-list::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        .comment-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gold);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--black);
+            font-weight: 700;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .comment-body {
+            flex: 1;
+        }
+
+        .comment-user {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--gold);
+        }
+
+        .comment-text {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 300;
+            line-height: 1.5;
+            margin-top: 3px;
+        }
+
+        .comment-time {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.35);
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .no-comments {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 0.8rem;
+            font-weight: 300;
+            padding: 20px 0;
+            font-style: italic;
+        }
+
+        .comment-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            color: var(--white);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 300;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .comment-input::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .comment-input:focus {
+            border-color: var(--gold);
+        }
+
+        .comment-submit {
+            padding: 10px 20px;
+            background: var(--gold);
+            color: var(--black);
+            border: none;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .comment-submit:hover {
+            background: var(--gold-soft);
+            transform: scale(1.05);
         }
 
         /* ============================================
@@ -1014,7 +1192,6 @@
             fill: var(--black);
         }
 
-        /* Pulse ring animation */
         .share-fab::before {
             content: '';
             position: absolute;
@@ -1149,7 +1326,6 @@
             color: var(--black);
         }
 
-        /* Brand colors for share options */
         .share-whatsapp .share-icon { background: #25D366; }
         .share-facebook .share-icon { background: #1877F2; }
         .share-x .share-icon { background: #000000; }
@@ -1255,6 +1431,7 @@
             .gallery-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
+                padding-bottom: 140px; /* Extra padding for mobile */
             }
 
             .about-details {
@@ -1278,6 +1455,16 @@
                 font-size: 1.1rem;
             }
 
+            /* Lightbox mobile adjustments */
+            .lightbox-img-container {
+                padding: 15px 15px 5px;
+            }
+
+            .lightbox-img {
+                max-width: 100vw;
+                max-height: 55vh;
+            }
+
             .lightbox-nav {
                 width: 45px;
                 height: 45px;
@@ -1293,22 +1480,21 @@
             }
 
             .lightbox-close {
-                top: 15px;
-                right: 15px;
+                top: 10px;
+                right: 10px;
                 width: 42px;
                 height: 42px;
                 font-size: 2rem;
             }
 
-            .lightbox-img {
-                max-width: 100vw;
-                max-height: 85vh;
+            .lightbox-counter {
+                bottom: 0;
+                font-size: 0.75rem;
+                padding: 5px 14px;
             }
 
-            .lightbox-counter {
-                bottom: 15px;
-                font-size: 0.75rem;
-                padding: 6px 16px;
+            .lightbox-comments {
+                padding: 10px 15px 40px;
             }
 
             /* Gallery overlay always visible on mobile */
@@ -1316,8 +1502,8 @@
                 opacity: 1;
                 background: linear-gradient(
                     to top,
-                    rgba(0, 0, 0, 0.7) 0%,
-                    transparent 50%
+                    rgba(0, 0, 0, 0.75) 0%,
+                    transparent 55%
                 );
             }
 
@@ -1360,6 +1546,14 @@
             .share-option .share-icon {
                 width: 38px;
                 height: 38px;
+            }
+
+            .comment-form {
+                flex-direction: column;
+            }
+
+            .comment-submit {
+                width: 100%;
             }
         }
 
@@ -1791,14 +1985,32 @@
     </div>
 
     <!-- ============================================
-         LIGHTBOX MODAL (Bold Full-Screen Viewer)
+         LIGHTBOX MODAL (With Comments)
     ============================================ -->
     <div id="lightbox" class="lightbox">
-        <span class="lightbox-close" id="lightboxClose">&times;</span>
-        <span class="lightbox-nav lightbox-prev" id="lightboxPrev">&#10094;</span>
-        <img src="" alt="Full view" class="lightbox-img" id="lightboxImg">
-        <span class="lightbox-nav lightbox-next" id="lightboxNext">&#10095;</span>
-        <div class="lightbox-counter"><span id="lightboxCurrent">1</span> / <span id="lightboxTotal">8</span></div>
+        <div class="lightbox-img-container">
+            <span class="lightbox-close" id="lightboxClose">&times;</span>
+            <span class="lightbox-nav lightbox-prev" id="lightboxPrev">&#10094;</span>
+            <img src="" alt="Full view" class="lightbox-img" id="lightboxImg">
+            <span class="lightbox-nav lightbox-next" id="lightboxNext">&#10095;</span>
+            <div class="lightbox-counter"><span id="lightboxCurrent">1</span> / <span id="lightboxTotal">8</span></div>
+        </div>
+        
+        <!-- Comments Section -->
+        <div class="lightbox-comments">
+            <div class="lightbox-comments-header">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
+                <span>Comments</span>
+                <span id="commentCount" style="color: var(--gold);">(0)</span>
+            </div>
+            <div class="comments-list" id="commentsList">
+                <div class="no-comments">No comments yet. Be the first to comment!</div>
+            </div>
+            <div class="comment-form">
+                <input type="text" class="comment-input" id="commentInput" placeholder="Write a comment..." maxlength="280">
+                <button class="comment-submit" id="commentSubmit">Post</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1854,7 +2066,7 @@
         });
 
         /* ============================================
-           GALLERY LIGHTBOX - BOLD FULL-SCREEN VIEWER
+           GALLERY LIGHTBOX WITH COMMENTS
         ============================================ */
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
@@ -1863,17 +2075,81 @@
         const lightboxNext = document.getElementById('lightboxNext');
         const lightboxCurrent = document.getElementById('lightboxCurrent');
         const lightboxTotal = document.getElementById('lightboxTotal');
+        const commentsList = document.getElementById('commentsList');
+        const commentInput = document.getElementById('commentInput');
+        const commentSubmit = document.getElementById('commentSubmit');
+        const commentCount = document.getElementById('commentCount');
 
         const galleryImages = Array.from(document.querySelectorAll('.gallery-item img'));
         let currentIndex = 0;
 
         lightboxTotal.textContent = galleryImages.length;
 
+        const COMMENTS_KEY = 'akuamoah_gallery_comments';
+
+        function loadComments() {
+            try {
+                const saved = localStorage.getItem(COMMENTS_KEY);
+                return saved ? JSON.parse(saved) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function saveComments(comments) {
+            try {
+                localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
+            } catch (e) {}
+        }
+
+        function getRandomFan() {
+            const names = ['Kwame', 'Ama', 'Kofi', 'Yaa', 'Nana', 'Adwoa', 'Kweku', 'Akosua', 'Yaw', 'Abena', 'Efua', 'Kwabena', 'Fan1', 'MusicLover', 'VibesOnly', 'GhanaQueen', 'AccraBoy'];
+            return names[Math.floor(Math.random() * names.length)];
+        }
+
+        function getTimeAgo(dateStr) {
+            const now = new Date();
+            const date = new Date(dateStr);
+            const diff = Math.floor((now - date) / 1000);
+            if (diff < 60) return 'Just now';
+            if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+            if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+            return Math.floor(diff / 86400) + 'd ago';
+        }
+
+        function renderComments(imgId) {
+            const comments = loadComments();
+            const imgComments = comments[imgId] || [];
+            
+            commentCount.textContent = `(${imgComments.length})`;
+            
+            if (imgComments.length === 0) {
+                commentsList.innerHTML = '<div class="no-comments">No comments yet. Be the first to comment!</div>';
+                return;
+            }
+
+            commentsList.innerHTML = imgComments.map(c => `
+                <div class="comment-item">
+                    <div class="comment-avatar">${c.user.charAt(0).toUpperCase()}</div>
+                    <div class="comment-body">
+                        <div class="comment-user">${c.user}</div>
+                        <div class="comment-text">${c.text}</div>
+                        <div class="comment-time">${getTimeAgo(c.date)}</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Scroll to bottom
+            commentsList.scrollTop = commentsList.scrollHeight;
+        }
+
         function openLightbox(index) {
             currentIndex = index;
+            const imgId = document.querySelectorAll('.gallery-item')[index].dataset.imgId;
             updateLightboxImage();
+            renderComments(imgId);
+            commentInput.value = '';
             lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
         }
 
         function updateLightboxImage() {
@@ -1884,6 +2160,11 @@
                 lightboxImg.src = galleryImages[currentIndex].src;
                 lightboxCurrent.textContent = currentIndex + 1;
                 
+                // Update comments for new image
+                const imgId = document.querySelectorAll('.gallery-item')[currentIndex].dataset.imgId;
+                renderComments(imgId);
+                commentInput.value = '';
+                
                 lightboxImg.onload = () => {
                     lightboxImg.style.opacity = '1';
                     lightboxImg.style.transform = 'scale(1)';
@@ -1893,7 +2174,6 @@
 
         function closeLightbox() {
             lightbox.classList.remove('active');
-            document.body.style.overflow = 'hidden';
         }
 
         function nextImage() {
@@ -1906,7 +2186,36 @@
             updateLightboxImage();
         }
 
-        // Click on image opens lightbox (NOT on the overlay buttons)
+        // Submit comment
+        commentSubmit.addEventListener('click', () => {
+            const text = commentInput.value.trim();
+            if (!text) return;
+            
+            const imgId = document.querySelectorAll('.gallery-item')[currentIndex].dataset.imgId;
+            const comments = loadComments();
+            
+            if (!comments[imgId]) comments[imgId] = [];
+            
+            comments[imgId].push({
+                user: getRandomFan(),
+                text: text,
+                date: new Date().toISOString()
+            });
+            
+            saveComments(comments);
+            renderComments(imgId);
+            commentInput.value = '';
+        });
+
+        // Submit on Enter key
+        commentInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                commentSubmit.click();
+            }
+        });
+
+        // Open lightbox on image click (not on overlay buttons)
         galleryImages.forEach((img, index) => {
             img.addEventListener('click', () => {
                 openLightbox(index);
@@ -1948,45 +2257,31 @@
 
         lightbox.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, { passive: true });
-
-        function handleSwipe() {
-            const swipeThreshold = 50;
             const diff = touchStartX - touchEndX;
-            if (Math.abs(diff) > swipeThreshold) {
+            if (Math.abs(diff) > 50) {
                 if (diff > 0) nextImage();
                 else prevImage();
             }
-        }
+        }, { passive: true });
 
         /* ============================================
            GALLERY SOCIAL INTERACTIONS (Love, Like, Share)
-           - Counts persist in localStorage
-           - Each image has its own independent counters
         ============================================ */
-        const STORAGE_KEY = 'akuamoah_gallery_stats';
+        const STATS_KEY = 'akuamoah_gallery_stats';
 
-        // Load saved stats from localStorage
         function loadStats() {
             try {
-                const saved = localStorage.getItem(STORAGE_KEY);
+                const saved = localStorage.getItem(STATS_KEY);
                 return saved ? JSON.parse(saved) : {};
-            } catch (e) {
-                return {};
-            }
+            } catch (e) { return {}; }
         }
 
-        // Save stats to localStorage
         function saveStats(stats) {
             try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
-            } catch (e) {
-                // Storage unavailable - continue without persistence
-            }
+                localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+            } catch (e) {}
         }
 
-        // Initialize all gallery items with their stats
         function initGalleryStats() {
             const stats = loadStats();
             const galleryItems = document.querySelectorAll('.gallery-item');
@@ -1997,14 +2292,12 @@
                     stats[id] = { love: 0, like: 0, userLoved: false, userLiked: false };
                 }
 
-                // Update displayed counts
                 const loveBtn = item.querySelector('.love-btn');
                 const likeBtn = item.querySelector('.like-btn');
                 
                 loveBtn.querySelector('.count').textContent = stats[id].love;
                 likeBtn.querySelector('.count').textContent = stats[id].like;
 
-                // Restore active state if user previously clicked
                 if (stats[id].userLoved) loveBtn.classList.add('active');
                 if (stats[id].userLiked) likeBtn.classList.add('active');
             });
@@ -2012,10 +2305,9 @@
             saveStats(stats);
         }
 
-        // Handle love/like/share button clicks
         document.querySelectorAll('.action-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent lightbox from opening
+                e.stopPropagation();
                 const galleryItem = btn.closest('.gallery-item');
                 const id = galleryItem.dataset.imgId;
                 const action = btn.dataset.action;
@@ -2027,36 +2319,29 @@
 
                 if (action === 'love') {
                     if (stats[id].userLoved) {
-                        // Unlike
                         stats[id].love = Math.max(0, stats[id].love - 1);
                         stats[id].userLoved = false;
                         btn.classList.remove('active');
                     } else {
-                        // Love
                         stats[id].love++;
                         stats[id].userLoved = true;
                         btn.classList.add('active');
                     }
                     btn.querySelector('.count').textContent = stats[id].love;
                     triggerPop(btn);
-                } 
-                else if (action === 'like') {
+                } else if (action === 'like') {
                     if (stats[id].userLiked) {
-                        // Un-like
                         stats[id].like = Math.max(0, stats[id].like - 1);
                         stats[id].userLiked = false;
                         btn.classList.remove('active');
                     } else {
-                        // Like
                         stats[id].like++;
                         stats[id].userLiked = true;
                         btn.classList.add('active');
                     }
                     btn.querySelector('.count').textContent = stats[id].like;
                     triggerPop(btn);
-                } 
-                else if (action === 'share') {
-                    // Open share modal for this specific image
+                } else if (action === 'share') {
                     openShareModal(galleryItem.querySelector('img').src, 'Check out this photo of Akuamoah');
                 }
 
@@ -2064,14 +2349,12 @@
             });
         });
 
-        // Pop animation effect
         function triggerPop(btn) {
             btn.classList.remove('pop');
-            void btn.offsetWidth; // Trigger reflow
+            void btn.offsetWidth;
             btn.classList.add('pop');
         }
 
-        // Initialize on load
         initGalleryStats();
 
         /* ============================================
@@ -2085,7 +2368,6 @@
         let currentShareUrl = window.location.href;
         let currentShareText = 'Check out Akuamoah — Ghanaian Singer, Songwriter & Performer. Music that speaks to the heart. 🎶';
 
-        // Open share modal (site-wide or specific image)
         function openShareModal(imageUrl = null, caption = null) {
             if (imageUrl) {
                 currentShareUrl = imageUrl;
@@ -2095,14 +2377,12 @@
                 currentShareText = 'Check out Akuamoah — Ghanaian Singer, Songwriter & Performer. Music that speaks to the heart. 🎶';
             }
 
-            // Try native share API first on mobile
             if (navigator.share && !imageUrl) {
                 navigator.share({
                     title: 'Akuamoah',
                     text: currentShareText,
                     url: currentShareUrl
                 }).catch(() => {
-                    // User cancelled or error - show modal instead
                     shareModal.classList.add('active');
                 });
             } else {
@@ -2115,16 +2395,12 @@
             copyFeedback.classList.remove('show');
         }
 
-        // Open modal when FAB is clicked
         shareFab.addEventListener('click', () => openShareModal());
-
-        // Close modal
         shareModalClose.addEventListener('click', closeShareModal);
         shareModal.addEventListener('click', (e) => {
             if (e.target === shareModal) closeShareModal();
         });
 
-        // Handle share option clicks
         document.querySelectorAll('.share-option').forEach(option => {
             option.addEventListener('click', () => {
                 const platform = option.dataset.share;
@@ -2150,7 +2426,6 @@
                             copyFeedback.classList.add('show');
                             setTimeout(() => copyFeedback.classList.remove('show'), 2500);
                         }).catch(() => {
-                            // Fallback for older browsers
                             const tempInput = document.createElement('input');
                             tempInput.value = currentShareUrl;
                             document.body.appendChild(tempInput);
@@ -2163,7 +2438,6 @@
                         break;
                 }
 
-                // Close modal after sharing (except copy which shows feedback)
                 if (platform !== 'copy') {
                     closeShareModal();
                 }
