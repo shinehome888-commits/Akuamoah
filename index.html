@@ -193,22 +193,31 @@
             align-items: center;
             text-align: center;
             color: var(--white);
-            perspective: 1200px;
         }
 
+        /* Slow, elegant background movement (Ken Burns effect) */
         .home-bg {
             position: absolute;
-            top: -5%;
-            left: -5%;
-            width: 110%;
-            height: 110%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-image: url('https://i.ibb.co/sd74q59J/IMG-9052.jpg');
             background-size: cover;
             background-position: center;
-            filter: grayscale(15%) brightness(0.7);
+            background-repeat: no-repeat;
+            filter: grayscale(15%) brightness(0.6);
             z-index: -2;
-            transition: transform 0.3s ease-out;
-            transform-origin: center;
+            animation: slowPanZoom 30s infinite alternate ease-in-out;
+        }
+
+        @keyframes slowPanZoom {
+            0% {
+                transform: scale(1.0) translate(0, 0);
+            }
+            100% {
+                transform: scale(1.1) translate(-1%, -1%);
+            }
         }
 
         .home-overlay {
@@ -219,8 +228,8 @@
             height: 100%;
             background: linear-gradient(
                 to bottom,
-                rgba(17, 17, 17, 0.5) 0%,
-                rgba(17, 17, 17, 0.65) 50%,
+                rgba(17, 17, 17, 0.4) 0%,
+                rgba(17, 17, 17, 0.6) 50%,
                 rgba(17, 17, 17, 0.85) 100%
             );
             z-index: -1;
@@ -228,16 +237,16 @@
 
         .home-content {
             padding: 0 20px;
-            transform-style: preserve-3d;
             animation: floatText 6s ease-in-out infinite;
         }
 
+        /* Slow, elegant floating motion for the text */
         @keyframes floatText {
             0%, 100% {
-                transform: translateY(0) rotateX(0deg);
+                transform: translateY(0);
             }
             50% {
-                transform: translateY(-15px) rotateX(2deg);
+                transform: translateY(-12px);
             }
         }
 
@@ -263,7 +272,6 @@
                 0 2px 0 rgba(0,0,0,0.3),
                 0 4px 10px rgba(0,0,0,0.4),
                 0 8px 25px rgba(0,0,0,0.5);
-            transform: translateZ(50px);
         }
 
         .hero-location {
@@ -575,7 +583,7 @@
         ============================================ */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 15px;
             max-width: 1200px;
             margin: 0 auto;
@@ -601,13 +609,13 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(17, 17, 17, 0.5);
+            background: rgba(17, 17, 17, 0.4);
             opacity: 0;
             transition: var(--transition);
         }
 
         .gallery-item:hover img {
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
 
         .gallery-item:hover::after {
@@ -769,7 +777,7 @@
         footer .powered {
             margin-top: 8px;
             font-size: 0.75rem;
-            opacity: 0.7;
+            opacity: 0.8;
             letter-spacing: 2px;
         }
 
@@ -805,7 +813,7 @@
             }
 
             .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
@@ -893,6 +901,10 @@
                 font-size: 1.3rem;
                 letter-spacing: 4px;
             }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -921,9 +933,9 @@
          HOME PAGE (Hero)
     ============================================ -->
     <section class="page home-page active" id="home">
-        <div class="home-bg" id="homeBg"></div>
+        <div class="home-bg"></div>
         <div class="home-overlay"></div>
-        <div class="home-content" id="homeContent">
+        <div class="home-content">
             <p class="hero-subtitle">Singer • Songwriter • Performer</p>
             <h1 class="hero-title">AKUAMOAH</h1>
             <p class="hero-location">Born in Kumasi • Based in Accra</p>
@@ -1025,22 +1037,28 @@
         </div>
         <div class="gallery-grid">
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80" alt="Gallery 1">
+                <img src="https://i.ibb.co/hwKpyqW/Chat-GPT-Image-Jul-13-2026-12-09-38-AM.png" alt="Gallery 1">
             </div>
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80" alt="Gallery 2">
+                <img src="https://i.ibb.co/ks36J59D/IMG-9043.jpg" alt="Gallery 2">
             </div>
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80" alt="Gallery 3">
+                <img src="https://i.ibb.co/0RV0hCHr/IMG-9044.jpg" alt="Gallery 3">
             </div>
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=600&q=80" alt="Gallery 4">
+                <img src="https://i.ibb.co/MyfXfbtR/IMG-9045.jpg" alt="Gallery 4">
             </div>
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80" alt="Gallery 5">
+                <img src="https://i.ibb.co/9HDw6JgT/IMG-9046.jpg" alt="Gallery 5">
             </div>
             <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1459865264687-595d652de67e?auto=format&fit=crop&w=600&q=80" alt="Gallery 6">
+                <img src="https://i.ibb.co/dw3WxwmT/IMG-9047.jpg" alt="Gallery 6">
+            </div>
+            <div class="gallery-item">
+                <img src="https://i.ibb.co/TM2fkqFS/IMG-9048.jpg" alt="Gallery 7">
+            </div>
+            <div class="gallery-item">
+                <img src="https://i.ibb.co/kgJkzygB/Chat-GPT-Image-Jul-13-2026-12-12-19-AM.png" alt="Gallery 8">
             </div>
         </div>
     </section>
@@ -1165,35 +1183,6 @@
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navLinks.classList.toggle('active');
-        });
-
-        /* ============================================
-           3D PARALLAX EFFECT ON HERO
-        ============================================ */
-        const homeContent = document.getElementById('homeContent');
-        const homeBg = document.getElementById('homeBg');
-        const homePage = document.getElementById('home');
-
-        homePage.addEventListener('mousemove', (e) => {
-            const { innerWidth, innerHeight } = window;
-            const x = (e.clientX / innerWidth) - 0.5;
-            const y = (e.clientY / innerHeight) - 0.5;
-
-            // Background parallax
-            homeBg.style.transform = `translate(${x * -20}px, ${y * -20}px) scale(1.05)`;
-
-            // Text 3D tilt
-            homeContent.style.transform = `
-                perspective(1000px)
-                rotateY(${x * 5}deg)
-                rotateX(${-y * 5}deg)
-                translateZ(30px)
-            `;
-        });
-
-        homePage.addEventListener('mouseleave', () => {
-            homeBg.style.transform = 'translate(0, 0) scale(1.05)';
-            homeContent.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) translateZ(0px)';
         });
 
         /* ============================================
