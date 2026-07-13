@@ -193,10 +193,9 @@
             align-items: center;
             text-align: center;
             color: var(--white);
-            padding-bottom: 80px; /* Prevent overlap with fixed footer on short screens */
+            padding-bottom: 100px; /* Prevent overlap with fixed footer */
         }
 
-        /* Slow, elegant background movement (Ken Burns effect) */
         .home-bg {
             position: absolute;
             top: 0;
@@ -213,12 +212,8 @@
         }
 
         @keyframes slowPanZoom {
-            0% {
-                transform: scale(1.0) translate(0, 0);
-            }
-            100% {
-                transform: scale(1.1) translate(-1%, -1%);
-            }
+            0% { transform: scale(1.0) translate(0, 0); }
+            100% { transform: scale(1.1) translate(-1%, -1%); }
         }
 
         .home-overlay {
@@ -241,14 +236,9 @@
             animation: floatText 6s ease-in-out infinite;
         }
 
-        /* Slow, elegant floating motion for the text */
         @keyframes floatText {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-12px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
         }
 
         .hero-subtitle {
@@ -269,10 +259,7 @@
             margin-bottom: 25px;
             line-height: 1;
             animation: fadeInUp 1.2s ease-out 0.4s both;
-            text-shadow: 
-                0 2px 0 rgba(0,0,0,0.3),
-                0 4px 10px rgba(0,0,0,0.4),
-                0 8px 25px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 0 rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.4), 0 8px 25px rgba(0,0,0,0.5);
         }
 
         .hero-location {
@@ -306,7 +293,6 @@
             animation: fadeInUp 1.2s ease-out 1s both;
         }
 
-        /* Buttons */
         .btn {
             display: inline-block;
             padding: 14px 38px;
@@ -348,14 +334,8 @@
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ============================================
@@ -363,7 +343,8 @@
         ============================================ */
         .inner-page {
             background: var(--white);
-            padding: 100px 8% 100px; /* Extra bottom padding to clear fixed footer */
+            /* CRITICAL: Large bottom padding ensures NO content is hidden behind the fixed footer when scrolling */
+            padding: 100px 8% 140px; 
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -624,7 +605,7 @@
         }
 
         /* ============================================
-           LIGHTBOX (Full Screen Image View)
+           LIGHTBOX (Full Screen Independent Image View)
         ============================================ */
         .lightbox {
             position: fixed;
@@ -633,7 +614,8 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.95);
-            z-index: 2000;
+            backdrop-filter: blur(15px);
+            z-index: 3000;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -649,13 +631,14 @@
         }
 
         .lightbox-img {
-            max-width: 90%;
+            max-width: 95%;
             max-height: 90vh;
             object-fit: contain;
             border-radius: 4px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(212, 175, 55, 0.3);
             transform: scale(0.9);
-            transition: transform 0.4s ease;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .lightbox.active .lightbox-img {
@@ -664,18 +647,19 @@
 
         .lightbox-close {
             position: absolute;
-            top: 20px;
-            right: 30px;
+            top: 25px;
+            right: 35px;
             color: var(--white);
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 300;
             cursor: pointer;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, transform 0.3s ease;
             line-height: 1;
         }
 
         .lightbox-close:hover {
             color: var(--gold);
+            transform: rotate(90deg);
         }
 
         /* ============================================
@@ -780,8 +764,9 @@
         .social-icons {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             margin-top: 40px;
+            flex-wrap: wrap; /* Ensures icons wrap nicely on small screens */
         }
 
         .social-icons a {
@@ -932,7 +917,8 @@
             }
 
             .inner-page {
-                padding: 90px 6% 100px; /* Maintains bottom clearance for footer */
+                /* CRITICAL: Extra padding on mobile to guarantee footer never overlaps content */
+                padding: 90px 6% 140px; 
             }
 
             .navbar {
@@ -973,6 +959,15 @@
             footer {
                 padding: 15px 6%;
                 font-size: 0.7rem;
+            }
+            
+            .social-icons {
+                gap: 12px;
+            }
+            
+            .social-icons a {
+                width: 42px;
+                height: 42px;
             }
         }
     </style>
@@ -1155,6 +1150,8 @@
                 </svg>
                 Chat Now
             </a>
+            
+            <!-- Updated Social Icons: Added X and Audiomack -->
             <div class="social-icons">
                 <!-- TikTok -->
                 <a href="#" aria-label="TikTok">
@@ -1180,6 +1177,18 @@
                         <path d="M23.5 6.2c-.3-1-1-1.8-2-2.1C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.5.6c-1 .3-1.7 1.1-2 2.1C0 8.1 0 12 0 12s0 3.9.5 5.8c.3 1 1 1.8 2 2.1 1.8.6 9.5.6 9.5.6s7.7 0 9.5-.6c1-.3 1.7-1.1 2-2.1.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.5 15.5v-7l6.5 3.5-6.5 3.5z"/>
                     </svg>
                 </a>
+                <!-- X (Twitter) -->
+                <a href="#" aria-label="X (Twitter)">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                </a>
+                <!-- Audiomack -->
+                <a href="#" aria-label="Audiomack">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14H8V8l7 4-7 4z"/>
+                    </svg>
+                </div>
             </div>
         </div>
     </section>
@@ -1193,7 +1202,7 @@
     </footer>
 
     <!-- ============================================
-         LIGHTBOX MODAL
+         LIGHTBOX MODAL (Independent Full-Screen View)
     ============================================ -->
     <div id="lightbox" class="lightbox">
         <span class="lightbox-close">&times;</span>
@@ -1217,7 +1226,7 @@
             const target = document.getElementById(pageId);
             if (target) {
                 target.classList.add('active');
-                // Reset scroll position on inner pages
+                // Reset scroll position on inner pages to top
                 if (target.classList.contains('inner-page')) {
                     target.scrollTop = 0;
                 }
@@ -1271,25 +1280,31 @@
             img.addEventListener('click', () => {
                 lightboxImg.src = img.src;
                 lightbox.classList.add('active');
+                // Prevent background scrolling while lightbox is open
+                document.body.style.overflow = 'hidden';
             });
         });
 
-        // Close lightbox when close button is clicked
-        lightboxClose.addEventListener('click', () => {
+        // Close lightbox function
+        function closeLightbox() {
             lightbox.classList.remove('active');
-        });
+            document.body.style.overflow = 'hidden'; // Keep body overflow hidden as per base CSS
+        }
 
-        // Close lightbox when clicking outside the image
+        // Close lightbox when close button is clicked
+        lightboxClose.addEventListener('click', closeLightbox);
+
+        // Close lightbox when clicking outside the image (on the backdrop)
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) {
-                lightbox.classList.remove('active');
+                closeLightbox();
             }
         });
 
         // Close lightbox with Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-                lightbox.classList.remove('active');
+                closeLightbox();
             }
         });
 
