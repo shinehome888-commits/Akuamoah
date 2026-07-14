@@ -415,7 +415,6 @@
             max-height: 500px;
         }
 
-        /* ABOUT IMAGE MOTION — slides smoothly from right to left and back */
         .about-image img {
             width: 120%;
             height: 100%;
@@ -424,12 +423,8 @@
         }
 
         @keyframes slideRightToLeft {
-            0% {
-                transform: translateX(5%);
-            }
-            100% {
-                transform: translateX(-15%);
-            }
+            0% { transform: translateX(5%); }
+            100% { transform: translateX(-15%); }
         }
 
         .about-image::before {
@@ -575,7 +570,6 @@
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            /* Extra bottom padding so last row buttons never hide behind footer */
             padding-bottom: 40px;
         }
 
@@ -663,7 +657,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Love button - turns red when active */
         .action-btn.love-btn.active svg {
             fill: #ff3b5c;
             filter: drop-shadow(0 0 6px rgba(255, 59, 92, 0.6));
@@ -673,7 +666,6 @@
             color: #ff3b5c;
         }
 
-        /* Like button - turns gold when active */
         .action-btn.like-btn.active svg {
             fill: var(--gold);
             filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.6));
@@ -683,7 +675,6 @@
             color: var(--gold);
         }
 
-        /* Comment button */
         .action-btn.comment-btn:hover svg {
             fill: var(--gold);
         }
@@ -692,12 +683,10 @@
             color: var(--gold);
         }
 
-        /* Share button */
         .action-btn.share-btn:hover svg {
             fill: var(--gold);
         }
 
-        /* Pop animation when clicked */
         @keyframes popIcon {
             0% { transform: scale(1); }
             50% { transform: scale(1.5); }
@@ -1494,7 +1483,6 @@
             .gallery-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
-                /* CRITICAL: Extra bottom padding on mobile so last row buttons are never hidden by footer */
                 padding-bottom: 80px;
             }
 
@@ -1552,7 +1540,6 @@
                 padding: 6px 16px;
             }
 
-            /* Gallery overlay always visible on mobile */
             .gallery-overlay {
                 opacity: 1;
                 background: linear-gradient(
@@ -1576,7 +1563,6 @@
                 gap: 8px;
             }
 
-            /* Share FAB mobile */
             .share-fab {
                 bottom: 95px;
                 right: 20px;
@@ -1589,7 +1575,6 @@
                 height: 20px;
             }
 
-            /* Share modal mobile */
             .share-modal-content {
                 padding: 35px 25px;
             }
@@ -1603,7 +1588,6 @@
                 height: 38px;
             }
 
-            /* Comment modal mobile */
             .comment-modal {
                 padding: 10px;
                 align-items: flex-end;
@@ -1648,7 +1632,6 @@
                 grid-template-columns: 1fr;
                 max-width: 400px;
                 margin: 0 auto;
-                /* Even more padding on small screens */
                 padding-bottom: 100px;
             }
             
@@ -1717,7 +1700,7 @@
         </div>
         <div class="about-container">
             <div class="about-image">
-                <img src="https://i.ibb.co/kgJkzygB/Chat-GPT-Image-Jul-13-2026-12-12-19-AM.png" alt="Akuamoah Portrait">
+                <img src="https://i.ibb.co/G4syc8zy/Chat-GPT-Image-Jul-14-2026-02-37-28-AM-1.png" alt="Akuamoah Portrait">
             </div>
             <div class="about-text">
                 <h3>A Voice from <span>Ghana</span></h3>
@@ -1797,7 +1780,7 @@
         </div>
         <div class="gallery-grid">
             <div class="gallery-item" data-img-id="img1">
-                <img src="https://i.ibb.co/hwKpyqW/Chat-GPT-Image-Jul-13-2026-12-09-38-AM.png" alt="Gallery 1">
+                <img src="https://i.ibb.co/G4syc8zy/Chat-GPT-Image-Jul-14-2026-02-37-28-AM-1.png" alt="Gallery 1">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -1930,28 +1913,6 @@
             </div>
             <div class="gallery-item" data-img-id="img7">
                 <img src="https://i.ibb.co/TM2fkqFS/IMG-9048.jpg" alt="Gallery 7">
-                <div class="gallery-overlay">
-                    <div class="gallery-actions">
-                        <button class="action-btn love-btn" data-action="love">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                            <span class="count">0</span>
-                        </button>
-                        <button class="action-btn like-btn" data-action="like">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
-                            <span class="count">0</span>
-                        </button>
-                        <button class="action-btn comment-btn" data-action="comment">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
-                            <span class="count">0</span>
-                        </button>
-                        <button class="action-btn share-btn" data-action="share">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-item" data-img-id="img8">
-                <img src="https://i.ibb.co/kgJkzygB/Chat-GPT-Image-Jul-13-2026-12-12-19-AM.png" alt="Gallery 8">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -2117,7 +2078,7 @@
         <span class="lightbox-nav lightbox-prev" id="lightboxPrev">&#10094;</span>
         <img src="" alt="Full view" class="lightbox-img" id="lightboxImg">
         <span class="lightbox-nav lightbox-next" id="lightboxNext">&#10095;</span>
-        <div class="lightbox-counter"><span id="lightboxCurrent">1</span> / <span id="lightboxTotal">8</span></div>
+        <div class="lightbox-counter"><span id="lightboxCurrent">1</span> / <span id="lightboxTotal">7</span></div>
     </div>
 
     <script>
@@ -2225,7 +2186,6 @@
             updateLightboxImage();
         }
 
-        // Click on image opens lightbox (NOT on the overlay buttons)
         galleryImages.forEach((img, index) => {
             img.addEventListener('click', () => {
                 openLightbox(index);
@@ -2257,7 +2217,6 @@
             else if (e.key === 'ArrowLeft') prevImage();
         });
 
-        // Touch/swipe support
         let touchStartX = 0;
         let touchEndX = 0;
 
@@ -2281,12 +2240,9 @@
 
         /* ============================================
            GALLERY SOCIAL INTERACTIONS (Love, Like, Comment, Share)
-           - Counts persist in localStorage
-           - Each image has its own independent counters
         ============================================ */
         const STORAGE_KEY = 'akuamoah_gallery_stats';
 
-        // Load saved stats from localStorage
         function loadStats() {
             try {
                 const saved = localStorage.getItem(STORAGE_KEY);
@@ -2296,16 +2252,12 @@
             }
         }
 
-        // Save stats to localStorage
         function saveStats(stats) {
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
-            } catch (e) {
-                // Storage unavailable
-            }
+            } catch (e) {}
         }
 
-        // Initialize all gallery items with their stats
         function initGalleryStats() {
             const stats = loadStats();
             const galleryItems = document.querySelectorAll('.gallery-item');
@@ -2315,12 +2267,10 @@
                 if (!stats[id]) {
                     stats[id] = { love: 0, like: 0, comments: [], userLoved: false, userLiked: false };
                 }
-                // Ensure comments array exists (for backward compatibility)
                 if (!stats[id].comments) {
                     stats[id].comments = [];
                 }
 
-                // Update displayed counts
                 const loveBtn = item.querySelector('.love-btn');
                 const likeBtn = item.querySelector('.like-btn');
                 const commentBtn = item.querySelector('.comment-btn');
@@ -2329,7 +2279,6 @@
                 likeBtn.querySelector('.count').textContent = stats[id].like;
                 commentBtn.querySelector('.count').textContent = stats[id].comments.length;
 
-                // Restore active state if user previously clicked
                 if (stats[id].userLoved) loveBtn.classList.add('active');
                 if (stats[id].userLiked) likeBtn.classList.add('active');
                 if (stats[id].comments.length > 0) commentBtn.classList.add('active');
@@ -2338,10 +2287,9 @@
             saveStats(stats);
         }
 
-        // Handle love/like/comment/share button clicks
         document.querySelectorAll('.action-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent lightbox from opening
+                e.stopPropagation();
                 const galleryItem = btn.closest('.gallery-item');
                 const id = galleryItem.dataset.imgId;
                 const action = btn.dataset.action;
@@ -2381,11 +2329,9 @@
                     triggerPop(btn);
                 } 
                 else if (action === 'comment') {
-                    // Open comment modal for this image
                     openCommentModal(id);
                 }
                 else if (action === 'share') {
-                    // Open share modal for this specific image
                     openShareModal(galleryItem.querySelector('img').src, 'Check out this photo of Akuamoah');
                 }
 
@@ -2393,14 +2339,12 @@
             });
         });
 
-        // Pop animation effect
         function triggerPop(btn) {
             btn.classList.remove('pop');
             void btn.offsetWidth;
             btn.classList.add('pop');
         }
 
-        // Initialize on load
         initGalleryStats();
 
         /* ============================================
@@ -2461,18 +2405,15 @@
                 `;
             }).join('');
 
-            // Scroll to bottom of comment list
             commentList.scrollTop = commentList.scrollHeight;
         }
 
-        // Escape HTML to prevent XSS
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
 
-        // Format time as "Just now", "X min ago", etc.
         function formatTime(timestamp) {
             const now = Date.now();
             const diff = Math.floor((now - timestamp) / 1000);
@@ -2484,7 +2425,6 @@
             return `${Math.floor(diff / 86400)}d ago`;
         }
 
-        // Handle comment submission
         commentForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const text = commentText.value.trim();
@@ -2507,7 +2447,6 @@
             stats[currentCommentImgId].comments.push(newComment);
             saveStats(stats);
 
-            // Update comment count on the gallery button
             const galleryItem = document.querySelector(`.gallery-item[data-img-id="${currentCommentImgId}"]`);
             if (galleryItem) {
                 const commentBtn = galleryItem.querySelector('.comment-btn');
@@ -2515,18 +2454,15 @@
                 commentBtn.classList.add('active');
             }
 
-            // Clear input and re-render
             commentText.value = '';
             renderComments();
         });
 
-        // Close comment modal
         commentModalClose.addEventListener('click', closeCommentModal);
         commentModal.addEventListener('click', (e) => {
             if (e.target === commentModal) closeCommentModal();
         });
 
-        // Update relative times every 30 seconds
         setInterval(() => {
             if (commentModal.classList.contains('active')) {
                 const timeEls = commentList.querySelectorAll('.comment-time');
