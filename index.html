@@ -79,6 +79,30 @@
         }
 
         /* ============================================
+           PAGE BACKGROUNDS (Transparent, Bold, Shining)
+        ============================================ */
+        .page-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+        }
+
+        .page-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ============================================
            NAVIGATION
         ============================================ */
         .navbar {
@@ -197,17 +221,8 @@
         }
 
         .home-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://i.ibb.co/sd74q59J/IMG-9052.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            filter: grayscale(15%) brightness(0.6);
-            z-index: -2;
+            background-image: url('https://i.ibb.co/XftCv8nP/IMG-9513.jpg');
+            filter: grayscale(10%) brightness(0.65);
             animation: slowPanZoom 30s infinite alternate ease-in-out;
         }
 
@@ -224,9 +239,9 @@
             height: 100%;
             background: linear-gradient(
                 to bottom,
-                rgba(17, 17, 17, 0.4) 0%,
-                rgba(17, 17, 17, 0.6) 50%,
-                rgba(17, 17, 17, 0.85) 100%
+                rgba(17, 17, 17, 0.3) 0%,
+                rgba(17, 17, 17, 0.5) 50%,
+                rgba(17, 17, 17, 0.8) 100%
             );
             z-index: -1;
         }
@@ -342,7 +357,7 @@
            INNER PAGES (About, Music, Gallery, Contact)
         ============================================ */
         .inner-page {
-            background: var(--white);
+            background: transparent; /* Allows background images to show */
             padding: 100px 8% 140px;
             overflow-y: auto;
             display: flex;
@@ -396,6 +411,19 @@
         /* ============================================
            ABOUT SECTION
         ============================================ */
+        #about {
+            background: transparent;
+        }
+
+        .about-bg {
+            background-image: url('https://i.ibb.co/wNyrNQ2B/IMG-9510.jpg');
+        }
+
+        .about-bg::after {
+            background: rgba(255, 255, 255, 0.82); /* Transparent but readable */
+            backdrop-filter: blur(2px);
+        }
+
         .about-container {
             display: grid;
             grid-template-columns: 1fr 1.2fr;
@@ -405,6 +433,8 @@
             margin: 0 auto;
             width: 100%;
             flex: 1;
+            position: relative;
+            z-index: 1;
         }
 
         .about-image {
@@ -413,6 +443,7 @@
             border-radius: 4px;
             aspect-ratio: 4/5;
             max-height: 500px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
         }
 
         .about-image img {
@@ -439,6 +470,14 @@
             border-radius: 4px;
         }
 
+        .about-text {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
         .about-text h3 {
             font-size: 1.8rem;
             font-weight: 600;
@@ -451,9 +490,9 @@
         }
 
         .about-text p {
-            color: var(--gray-text);
+            color: var(--black);
             margin-bottom: 18px;
-            font-weight: 300;
+            font-weight: 400;
             font-size: 0.95rem;
             line-height: 1.8;
         }
@@ -463,7 +502,7 @@
             gap: 30px;
             margin-top: 25px;
             padding-top: 25px;
-            border-top: 1px solid var(--gray-soft);
+            border-top: 1px solid rgba(0,0,0,0.1);
         }
 
         .about-detail h4 {
@@ -472,19 +511,32 @@
             color: var(--gold);
             text-transform: uppercase;
             margin-bottom: 6px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .about-detail p {
             margin: 0;
             color: var(--black);
-            font-weight: 400;
+            font-weight: 500;
             font-size: 0.9rem;
         }
 
         /* ============================================
-           MUSIC SECTION (Updated with Spotify & Audiomack)
+           MUSIC SECTION
         ============================================ */
+        #music {
+            background: transparent;
+        }
+
+        .music-bg {
+            background-image: url('https://i.ibb.co/8ncS7tZW/IMG-9511-1.jpg');
+        }
+
+        .music-bg::after {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(2px);
+        }
+
         .music-container {
             max-width: 800px;
             margin: 0 auto;
@@ -492,14 +544,17 @@
             display: flex;
             flex-direction: column;
             gap: 40px;
+            position: relative;
+            z-index: 1;
         }
 
         .music-platform-section {
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
-            border: 1px solid var(--gray-soft);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             animation: fadeInUp 0.8s ease-out;
         }
 
@@ -520,16 +575,17 @@
         .audiomack-card {
             text-align: center;
             padding: 40px 20px;
-            background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+            background: rgba(255, 255, 255, 0.5);
             border-radius: 12px;
-            border: 1px dashed var(--gray-soft);
+            border: 1px dashed rgba(0,0,0,0.15);
         }
 
         .audiomack-card p {
-            color: var(--gray-text);
+            color: var(--black);
             margin-bottom: 25px;
             font-size: 1rem;
             line-height: 1.6;
+            font-weight: 400;
         }
 
         .btn-platform {
@@ -563,6 +619,10 @@
         /* ============================================
            GALLERY SECTION
         ============================================ */
+        #gallery {
+            background: var(--white); /* Keep gallery white for clean image viewing */
+        }
+
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -571,6 +631,8 @@
             margin: 0 auto;
             width: 100%;
             padding-bottom: 40px;
+            position: relative;
+            z-index: 1;
         }
 
         .gallery-item {
@@ -1049,10 +1111,19 @@
            CONTACT SECTION (WhatsApp focused)
         ============================================ */
         .contact-page {
-            background: var(--black);
+            background: transparent;
             color: var(--white);
             text-align: center;
             justify-content: center;
+        }
+
+        #contact .page-bg {
+            background-image: url('https://i.ibb.co/j9WmqNmZ/582d2b20-8acc-442f-a3f6-c4ff338aafca.jpg');
+        }
+
+        #contact .page-bg::after {
+            background: rgba(17, 17, 17, 0.80); /* Dark transparent for white text */
+            backdrop-filter: blur(2px);
         }
 
         .contact-page .section-title {
@@ -1063,10 +1134,12 @@
             max-width: 600px;
             margin: 0 auto;
             padding: 50px 40px;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 16px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            position: relative;
+            z-index: 1;
         }
 
         .whatsapp-icon {
@@ -1101,7 +1174,7 @@
         }
 
         .whatsapp-card p {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 300;
             margin-bottom: 30px;
             font-size: 0.95rem;
@@ -1150,6 +1223,8 @@
             gap: 15px;
             margin-top: 40px;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
         }
 
         .social-icons a {
@@ -1605,6 +1680,10 @@
             .music-platform-section {
                 padding: 20px;
             }
+            
+            .about-text {
+                padding: 25px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1671,7 +1750,7 @@
          HOME PAGE (Hero)
     ============================================ -->
     <section class="page home-page active" id="home">
-        <div class="home-bg"></div>
+        <div class="home-bg page-bg"></div>
         <div class="home-overlay"></div>
         <div class="home-content">
             <p class="hero-subtitle">Singer • Songwriter • Performer</p>
@@ -1689,6 +1768,7 @@
          ABOUT PAGE
     ============================================ -->
     <section class="page inner-page" id="about">
+        <div class="page-bg about-bg"></div>
         <div class="section-header">
             <p class="section-label">About</p>
             <h2 class="section-title">The Artist</h2>
@@ -1724,9 +1804,10 @@
     </section>
 
     <!-- ============================================
-         MUSIC PAGE (Updated with Spotify & Audiomack)
+         MUSIC PAGE
     ============================================ -->
     <section class="page inner-page" id="music">
+        <div class="page-bg music-bg"></div>
         <div class="section-header">
             <p class="section-label">Discography</p>
             <h2 class="section-title">Latest Music</h2>
@@ -1741,7 +1822,6 @@
                     </svg>
                     <h3>Listen on Spotify</h3>
                 </div>
-                <!-- This embed automatically pulls ALL her top tracks, albums, and latest releases directly from Spotify -->
                 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/3pmUySjW35ePmLy86cEV8U?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
 
@@ -1934,6 +2014,7 @@
          CONTACT PAGE (WhatsApp Focused)
     ============================================ -->
     <section class="page inner-page contact-page" id="contact">
+        <div class="page-bg contact-bg"></div>
         <div class="section-header">
             <p class="section-label">Get in Touch</p>
             <h2 class="section-title">Let's Connect</h2>
