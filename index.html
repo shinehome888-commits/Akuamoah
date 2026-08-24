@@ -424,19 +424,20 @@
             aspect-ratio: 4/5;
             max-height: 500px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            background: rgba(0,0,0,0.05);
         }
 
+        /* Continuous slow slide animation: enters from right, exits to left */
         .about-image img {
-            width: 115%;
+            width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
-            animation: slideRightToLeft 12s ease-in-out infinite alternate;
+            animation: slideAcross 25s linear infinite;
         }
 
-        @keyframes slideRightToLeft {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-10%); }
+        @keyframes slideAcross {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
 
         .about-image::before {
@@ -1084,7 +1085,7 @@
         }
 
         /* ============================================
-           CONTACT SECTION
+           CONTACT SECTION (Redesigned for Maximum Background Visibility)
         ============================================ */
         .contact-page {
             background: transparent;
@@ -1095,7 +1096,7 @@
 
         #contact .page-bg {
             background-image: url('https://i.ibb.co/j9WmqNmZ/582d2b20-8acc-442f-a3f6-c4ff338aafca.jpg');
-            filter: brightness(0.8);
+            filter: brightness(0.85); /* Slightly brighter to let the image shine */
         }
 
         .contact-page .section-title {
@@ -1103,17 +1104,17 @@
             text-shadow: 0 2px 15px rgba(0,0,0,0.6);
         }
 
-        /* Highly transparent glassmorphism for contact card */
+        /* Ultra-clean glassmorphism to let the background shine through beautifully */
         .whatsapp-card {
             max-width: 600px;
             margin: 0 auto;
             padding: 50px 40px;
-            background: rgba(0, 0, 0, 0.35); /* More transparent to let background shine */
+            background: rgba(0, 0, 0, 0.2); /* Highly transparent */
             border: 1px solid rgba(212, 175, 55, 0.4);
-            border-radius: 16px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            border-radius: 24px;
+            backdrop-filter: blur(6px); /* Very light blur to keep text readable but background visible */
+            -webkit-backdrop-filter: blur(6px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
             position: relative;
             z-index: 1;
         }
@@ -1147,6 +1148,8 @@
             font-weight: 500;
             margin-bottom: 12px;
             letter-spacing: 2px;
+            color: var(--white);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         .whatsapp-card p {
@@ -1154,6 +1157,7 @@
             font-weight: 300;
             margin-bottom: 30px;
             font-size: 0.95rem;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
         }
 
         .whatsapp-number {
@@ -1163,6 +1167,7 @@
             font-weight: 500;
             margin-bottom: 30px;
             display: block;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         .btn-whatsapp {
@@ -1212,6 +1217,7 @@
             justify-content: center;
             align-items: center;
             transition: var(--transition);
+            background: rgba(0, 0, 0, 0.2);
         }
 
         .social-icons a:hover {
@@ -1821,7 +1827,7 @@
     </section>
 
     <!-- ============================================
-         GALLERY PAGE (10 Professional Images)
+         GALLERY PAGE (10 New Professional Images)
     ============================================ -->
     <section class="page inner-page" id="gallery">
         <div class="section-header">
@@ -1830,7 +1836,7 @@
         </div>
         <div class="gallery-grid">
             <div class="gallery-item" data-img-id="img1">
-                <img src="https://i.ibb.co/PZ6k7xjn/27b5180f-90fb-4002-8b5d-b06e4ade5d6c.jpg" alt="Gallery 1">
+                <img src="https://i.ibb.co/PGWdXcqb/IMG-9042.jpg" alt="Gallery 1">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -1852,7 +1858,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img2">
-                <img src="https://i.ibb.co/jPTN7F5H/0360ef30-a1af-4c5e-be96-d1752fd4e76e.jpg" alt="Gallery 2">
+                <img src="https://i.ibb.co/YTdXpscV/IMG-9043.jpg" alt="Gallery 2">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -1874,7 +1880,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img3">
-                <img src="https://i.ibb.co/j9WmqNmZ/582d2b20-8acc-442f-a3f6-c4ff338aafca.jpg" alt="Gallery 3">
+                <img src="https://i.ibb.co/0yL75HXY/IMG-9044.jpg" alt="Gallery 3">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -1896,7 +1902,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img4">
-                <img src="https://i.ibb.co/yFbMZSmH/cc13cd65-1c7e-41b8-bfd0-982ae8e86f52.jpg" alt="Gallery 4">
+                <img src="https://i.ibb.co/JRxBDsKr/IMG-9045.jpg" alt="Gallery 4">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -1918,7 +1924,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img5">
-                <img src="https://i.ibb.co/67ZTLb7R/d40cf84b-d065-4c59-81d5-2308c75d8ce3.jpg" alt="Gallery 5">
+                <img src="https://i.ibb.co/Q7nS9DpL/IMG-9046.jpg" alt="Gallery 5">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -1940,7 +1946,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img6">
-                <img src="https://i.ibb.co/hRHz7Q4C/IMG-9509.jpg" alt="Gallery 6">
+                <img src="https://i.ibb.co/Df3r1Dz0/IMG-9047.jpg" alt="Gallery 6">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -1962,7 +1968,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img7">
-                <img src="https://i.ibb.co/wNyrNQ2B/IMG-9510.jpg" alt="Gallery 7">
+                <img src="https://i.ibb.co/nqYvMhR5/IMG-9048.jpg" alt="Gallery 7">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -1984,7 +1990,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img8">
-                <img src="https://i.ibb.co/8ncS7tZW/IMG-9511-1.jpg" alt="Gallery 8">
+                <img src="https://i.ibb.co/ycdDnmZS/IMG-9049.jpg" alt="Gallery 8">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -2006,7 +2012,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img9">
-                <img src="https://i.ibb.co/8ncS7tZW/IMG-9511-1.jpg" alt="Gallery 9">
+                <img src="https://i.ibb.co/F44bFxM8/IMG-9052-1.jpg" alt="Gallery 9">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -2028,7 +2034,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img10">
-                <img src="https://i.ibb.co/XftCv8nP/IMG-9513.jpg" alt="Gallery 10">
+                <img src="https://i.ibb.co/tTSXPrvh/IMG-9053-1.jpg" alt="Gallery 10">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -2053,7 +2059,7 @@
     </section>
 
     <!-- ============================================
-         CONTACT PAGE
+         CONTACT PAGE (Redesigned for Maximum Background Visibility)
     ============================================ -->
     <section class="page inner-page contact-page" id="contact">
         <div class="page-bg"></div>
