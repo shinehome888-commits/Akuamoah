@@ -79,7 +79,7 @@
         }
 
         /* ============================================
-           PAGE BACKGROUNDS (Clear, Perfect Fit, Highlighting Content)
+           PAGE BACKGROUNDS (Professional, Clear, No Zoom)
         ============================================ */
         .page-bg {
             position: absolute;
@@ -88,9 +88,10 @@
             width: 100%;
             height: 100%;
             background-size: cover;
-            background-position: center;
+            background-position: center center; /* Ensures faces/center subjects show perfectly */
             background-repeat: no-repeat;
             z-index: -1;
+            /* No zoom animations, static and professional */
         }
 
         /* ============================================
@@ -213,13 +214,8 @@
 
         .home-bg {
             background-image: url('https://i.ibb.co/XftCv8nP/IMG-9513.jpg');
-            filter: brightness(0.75); /* Clear view, but allows white/gold text to pop beautifully */
-            animation: slowPanZoom 40s infinite alternate ease-in-out;
-        }
-
-        @keyframes slowPanZoom {
-            0% { transform: scale(1.0) translate(0, 0); }
-            100% { transform: scale(1.08) translate(-1%, -1%); }
+            /* Subtle brightness adjustment to let the picture shine naturally */
+            filter: brightness(0.85); 
         }
 
         .home-overlay {
@@ -228,11 +224,12 @@
             left: 0;
             width: 100%;
             height: 100%;
+            /* Very subtle gradient so the picture is clearly visible but text pops */
             background: linear-gradient(
                 to bottom,
-                rgba(17, 17, 17, 0.2) 0%,
-                rgba(17, 17, 17, 0.4) 50%,
-                rgba(17, 17, 17, 0.7) 100%
+                rgba(17, 17, 17, 0.15) 0%,
+                rgba(17, 17, 17, 0.3) 50%,
+                rgba(17, 17, 17, 0.5) 100%
             );
             z-index: -1;
         }
@@ -255,7 +252,7 @@
             margin-bottom: 20px;
             font-weight: 400;
             animation: fadeInUp 1.2s ease-out 0.2s both;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
         }
 
         .hero-title {
@@ -265,7 +262,7 @@
             margin-bottom: 25px;
             line-height: 1;
             animation: fadeInUp 1.2s ease-out 0.4s both;
-            text-shadow: 0 2px 0 rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.4), 0 8px 25px rgba(0,0,0,0.5);
+            text-shadow: 0 4px 20px rgba(0,0,0,0.6);
         }
 
         .hero-location {
@@ -275,7 +272,7 @@
             font-weight: 300;
             opacity: 0.95;
             animation: fadeInUp 1.2s ease-out 0.6s both;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
         }
 
         .hero-tagline {
@@ -288,7 +285,7 @@
             margin-right: auto;
             opacity: 0.95;
             animation: fadeInUp 1.2s ease-out 0.8s both;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
         }
 
         .hero-buttons {
@@ -348,7 +345,7 @@
            INNER PAGES (About, Music, Gallery, Contact)
         ============================================ */
         .inner-page {
-            background: transparent; /* Allows background images to show clearly */
+            background: transparent;
             padding: 100px 8% 140px;
             overflow-y: auto;
             display: flex;
@@ -381,6 +378,7 @@
             text-transform: uppercase;
             margin-bottom: 15px;
             font-weight: 500;
+            text-shadow: 0 2px 10px rgba(255,255,255,0.8);
         }
 
         .section-title {
@@ -388,7 +386,7 @@
             font-weight: 600;
             letter-spacing: 3px;
             color: var(--black);
-            text-shadow: 0 2px 10px rgba(255,255,255,0.8); /* Highlights text against background */
+            text-shadow: 0 2px 15px rgba(255,255,255,0.9);
         }
 
         .section-title::after {
@@ -398,6 +396,7 @@
             height: 2px;
             background: var(--gold);
             margin: 20px auto 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         /* ============================================
@@ -405,7 +404,7 @@
         ============================================ */
         #about .page-bg {
             background-image: url('https://i.ibb.co/wNyrNQ2B/IMG-9510.jpg');
-            filter: brightness(0.85); /* Clear view of the picture */
+            filter: brightness(0.9); /* Keeps it bright and clear */
         }
 
         .about-container {
@@ -427,19 +426,20 @@
             border-radius: 8px;
             aspect-ratio: 4/5;
             max-height: 500px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
         }
 
         .about-image img {
-            width: 120%;
+            width: 115%;
             height: 100%;
             object-fit: cover;
+            object-position: center;
             animation: slideRightToLeft 12s ease-in-out infinite alternate;
         }
 
         @keyframes slideRightToLeft {
-            0% { transform: translateX(5%); }
-            100% { transform: translateX(-15%); }
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-10%); }
         }
 
         .about-image::before {
@@ -454,13 +454,13 @@
             border-radius: 8px;
         }
 
-        /* Frosted glass effect highlights the content without hiding the background */
+        /* Professional Frosted Glass Effect */
         .about-text {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             padding: 40px;
-            border-radius: 12px;
+            border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.6);
             box-shadow: 0 15px 40px rgba(0,0,0,0.1);
         }
@@ -513,7 +513,7 @@
         ============================================ */
         #music .page-bg {
             background-image: url('https://i.ibb.co/8ncS7tZW/IMG-9511-1.jpg');
-            filter: brightness(0.85); /* Clear view of the picture */
+            filter: brightness(0.9);
         }
 
         .music-container {
@@ -600,7 +600,7 @@
            GALLERY SECTION
         ============================================ */
         #gallery {
-            background: var(--white); /* Keep gallery clean white for optimal image viewing */
+            background: var(--white);
         }
 
         .gallery-grid {
@@ -635,7 +635,7 @@
         }
 
         /* ============================================
-           GALLERY SOCIAL OVERLAY (Love, Like, Comment, Share)
+           GALLERY SOCIAL OVERLAY
         ============================================ */
         .gallery-overlay {
             position: absolute;
@@ -1088,7 +1088,7 @@
         }
 
         /* ============================================
-           CONTACT SECTION (WhatsApp focused)
+           CONTACT SECTION
         ============================================ */
         .contact-page {
             background: transparent;
@@ -1099,15 +1099,14 @@
 
         #contact .page-bg {
             background-image: url('https://i.ibb.co/j9WmqNmZ/582d2b20-8acc-442f-a3f6-c4ff338aafca.jpg');
-            filter: brightness(0.7); /* Clear view, but ensures white/gold text pops perfectly */
+            filter: brightness(0.8); /* Clear, shining, but readable */
         }
 
         .contact-page .section-title {
             color: var(--white);
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 15px rgba(0,0,0,0.6);
         }
 
-        /* Frosted glass effect highlights the content without hiding the background */
         .whatsapp-card {
             max-width: 600px;
             margin: 0 auto;
@@ -1236,7 +1235,7 @@
         }
 
         /* ============================================
-           FOOTER (Always visible, non-interfering)
+           FOOTER
         ============================================ */
         footer {
             position: fixed;
@@ -1267,7 +1266,7 @@
         }
 
         /* ============================================
-           FLOATING SHARE BUTTON (All Pages)
+           FLOATING SHARE BUTTON
         ============================================ */
         .share-fab {
             position: fixed;
@@ -1825,7 +1824,7 @@
     </section>
 
     <!-- ============================================
-         GALLERY PAGE (with Love, Like, Comment, Share)
+         GALLERY PAGE
     ============================================ -->
     <section class="page inner-page" id="gallery">
         <div class="section-header">
@@ -1991,7 +1990,7 @@
     </section>
 
     <!-- ============================================
-         CONTACT PAGE (WhatsApp Focused)
+         CONTACT PAGE
     ============================================ -->
     <section class="page inner-page contact-page" id="contact">
         <div class="page-bg"></div>
@@ -2041,7 +2040,7 @@
     </section>
 
     <!-- ============================================
-         FOOTER (Always visible, non-interfering)
+         FOOTER
     ============================================ -->
     <footer id="footer">
         <p>Copyright © 2026 <span>Akuamoah</span>. All rights reserved.</p>
@@ -2049,7 +2048,7 @@
     </footer>
 
     <!-- ============================================
-         FLOATING SHARE BUTTON (Visible on ALL pages)
+         FLOATING SHARE BUTTON
     ============================================ -->
     <button class="share-fab" id="shareFab" aria-label="Share this website">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -2116,7 +2115,7 @@
     </div>
 
     <!-- ============================================
-         LIGHTBOX MODAL (Bold Full-Screen Viewer)
+         LIGHTBOX MODAL
     ============================================ -->
     <div id="lightbox" class="lightbox">
         <span class="lightbox-close" id="lightboxClose">&times;</span>
@@ -2179,7 +2178,7 @@
         });
 
         /* ============================================
-           GALLERY LIGHTBOX - BOLD FULL-SCREEN VIEWER
+           GALLERY LIGHTBOX
         ============================================ */
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
@@ -2284,7 +2283,7 @@
         }
 
         /* ============================================
-           GALLERY SOCIAL INTERACTIONS (Love, Like, Comment, Share)
+           GALLERY SOCIAL INTERACTIONS
         ============================================ */
         const STORAGE_KEY = 'akuamoah_gallery_stats';
 
@@ -2522,7 +2521,7 @@
         }, 30000);
 
         /* ============================================
-           SHARE FUNCTIONALITY (Site-wide + per image)
+           SHARE FUNCTIONALITY
         ============================================ */
         const shareFab = document.getElementById('shareFab');
         const shareModal = document.getElementById('shareModal');
