@@ -79,7 +79,7 @@
         }
 
         /* ============================================
-           PAGE BACKGROUNDS (Transparent, Bold, Shining)
+           PAGE BACKGROUNDS (Clear, Perfect Fit, Highlighting Content)
         ============================================ */
         .page-bg {
             position: absolute;
@@ -91,15 +91,6 @@
             background-position: center;
             background-repeat: no-repeat;
             z-index: -1;
-        }
-
-        .page-bg::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
         }
 
         /* ============================================
@@ -222,13 +213,13 @@
 
         .home-bg {
             background-image: url('https://i.ibb.co/XftCv8nP/IMG-9513.jpg');
-            filter: grayscale(10%) brightness(0.65);
-            animation: slowPanZoom 30s infinite alternate ease-in-out;
+            filter: brightness(0.75); /* Clear view, but allows white/gold text to pop beautifully */
+            animation: slowPanZoom 40s infinite alternate ease-in-out;
         }
 
         @keyframes slowPanZoom {
             0% { transform: scale(1.0) translate(0, 0); }
-            100% { transform: scale(1.1) translate(-1%, -1%); }
+            100% { transform: scale(1.08) translate(-1%, -1%); }
         }
 
         .home-overlay {
@@ -239,9 +230,9 @@
             height: 100%;
             background: linear-gradient(
                 to bottom,
-                rgba(17, 17, 17, 0.3) 0%,
-                rgba(17, 17, 17, 0.5) 50%,
-                rgba(17, 17, 17, 0.8) 100%
+                rgba(17, 17, 17, 0.2) 0%,
+                rgba(17, 17, 17, 0.4) 50%,
+                rgba(17, 17, 17, 0.7) 100%
             );
             z-index: -1;
         }
@@ -282,7 +273,7 @@
             letter-spacing: 3px;
             margin-bottom: 20px;
             font-weight: 300;
-            opacity: 0.9;
+            opacity: 0.95;
             animation: fadeInUp 1.2s ease-out 0.6s both;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
         }
@@ -295,7 +286,7 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            opacity: 0.9;
+            opacity: 0.95;
             animation: fadeInUp 1.2s ease-out 0.8s both;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
         }
@@ -357,7 +348,7 @@
            INNER PAGES (About, Music, Gallery, Contact)
         ============================================ */
         .inner-page {
-            background: transparent; /* Allows background images to show */
+            background: transparent; /* Allows background images to show clearly */
             padding: 100px 8% 140px;
             overflow-y: auto;
             display: flex;
@@ -397,6 +388,7 @@
             font-weight: 600;
             letter-spacing: 3px;
             color: var(--black);
+            text-shadow: 0 2px 10px rgba(255,255,255,0.8); /* Highlights text against background */
         }
 
         .section-title::after {
@@ -411,17 +403,9 @@
         /* ============================================
            ABOUT SECTION
         ============================================ */
-        #about {
-            background: transparent;
-        }
-
-        .about-bg {
+        #about .page-bg {
             background-image: url('https://i.ibb.co/wNyrNQ2B/IMG-9510.jpg');
-        }
-
-        .about-bg::after {
-            background: rgba(255, 255, 255, 0.82); /* Transparent but readable */
-            backdrop-filter: blur(2px);
+            filter: brightness(0.85); /* Clear view of the picture */
         }
 
         .about-container {
@@ -440,10 +424,10 @@
         .about-image {
             position: relative;
             overflow: hidden;
-            border-radius: 4px;
+            border-radius: 8px;
             aspect-ratio: 4/5;
             max-height: 500px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
         }
 
         .about-image img {
@@ -467,15 +451,18 @@
             bottom: -20px;
             border: 2px solid var(--gold);
             z-index: -1;
-            border-radius: 4px;
+            border-radius: 8px;
         }
 
+        /* Frosted glass effect highlights the content without hiding the background */
         .about-text {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             padding: 40px;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
         }
 
         .about-text h3 {
@@ -524,17 +511,9 @@
         /* ============================================
            MUSIC SECTION
         ============================================ */
-        #music {
-            background: transparent;
-        }
-
-        .music-bg {
+        #music .page-bg {
             background-image: url('https://i.ibb.co/8ncS7tZW/IMG-9511-1.jpg');
-        }
-
-        .music-bg::after {
-            background: rgba(255, 255, 255, 0.82);
-            backdrop-filter: blur(2px);
+            filter: brightness(0.85); /* Clear view of the picture */
         }
 
         .music-container {
@@ -549,11 +528,12 @@
         }
 
         .music-platform-section {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.6);
             animation: fadeInUp 0.8s ease-out;
         }
@@ -620,7 +600,7 @@
            GALLERY SECTION
         ============================================ */
         #gallery {
-            background: var(--white); /* Keep gallery white for clean image viewing */
+            background: var(--white); /* Keep gallery clean white for optimal image viewing */
         }
 
         .gallery-grid {
@@ -1119,25 +1099,25 @@
 
         #contact .page-bg {
             background-image: url('https://i.ibb.co/j9WmqNmZ/582d2b20-8acc-442f-a3f6-c4ff338aafca.jpg');
-        }
-
-        #contact .page-bg::after {
-            background: rgba(17, 17, 17, 0.80); /* Dark transparent for white text */
-            backdrop-filter: blur(2px);
+            filter: brightness(0.7); /* Clear view, but ensures white/gold text pops perfectly */
         }
 
         .contact-page .section-title {
             color: var(--white);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
+        /* Frosted glass effect highlights the content without hiding the background */
         .whatsapp-card {
             max-width: 600px;
             margin: 0 auto;
             padding: 50px 40px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(17, 17, 17, 0.75);
             border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 16px;
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             position: relative;
             z-index: 1;
         }
@@ -1174,7 +1154,7 @@
         }
 
         .whatsapp-card p {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             font-weight: 300;
             margin-bottom: 30px;
             font-size: 0.95rem;
@@ -1768,7 +1748,7 @@
          ABOUT PAGE
     ============================================ -->
     <section class="page inner-page" id="about">
-        <div class="page-bg about-bg"></div>
+        <div class="page-bg"></div>
         <div class="section-header">
             <p class="section-label">About</p>
             <h2 class="section-title">The Artist</h2>
@@ -1807,7 +1787,7 @@
          MUSIC PAGE
     ============================================ -->
     <section class="page inner-page" id="music">
-        <div class="page-bg music-bg"></div>
+        <div class="page-bg"></div>
         <div class="section-header">
             <p class="section-label">Discography</p>
             <h2 class="section-title">Latest Music</h2>
@@ -2014,7 +1994,7 @@
          CONTACT PAGE (WhatsApp Focused)
     ============================================ -->
     <section class="page inner-page contact-page" id="contact">
-        <div class="page-bg contact-bg"></div>
+        <div class="page-bg"></div>
         <div class="section-header">
             <p class="section-label">Get in Touch</p>
             <h2 class="section-title">Let's Connect</h2>
