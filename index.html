@@ -208,7 +208,8 @@
             align-items: center;
             text-align: center;
             color: var(--white);
-            padding-bottom: 100px;
+            /* Increased bottom padding to ensure footer never overlaps content */
+            padding-bottom: 140px; 
         }
 
         .home-bg {
@@ -343,7 +344,8 @@
         ============================================ */
         .inner-page {
             background: transparent;
-            padding: 100px 8% 140px;
+            /* Generous bottom padding ensures footer NEVER overlaps content */
+            padding: 100px 8% 200px; 
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -427,7 +429,6 @@
             background: rgba(0,0,0,0.05);
         }
 
-        /* Continuous slow slide animation: enters from right, exits to left */
         .about-image img {
             width: 100%;
             height: 100%;
@@ -607,7 +608,7 @@
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            padding-bottom: 40px;
+            padding-bottom: 60px;
             position: relative;
             z-index: 1;
         }
@@ -1096,7 +1097,7 @@
 
         #contact .page-bg {
             background-image: url('https://i.ibb.co/j9WmqNmZ/582d2b20-8acc-442f-a3f6-c4ff338aafca.jpg');
-            filter: brightness(0.85); /* Slightly brighter to let the image shine */
+            filter: brightness(0.85);
         }
 
         .contact-page .section-title {
@@ -1104,15 +1105,14 @@
             text-shadow: 0 2px 15px rgba(0,0,0,0.6);
         }
 
-        /* Ultra-clean glassmorphism to let the background shine through beautifully */
         .whatsapp-card {
             max-width: 600px;
             margin: 0 auto;
             padding: 50px 40px;
-            background: rgba(0, 0, 0, 0.2); /* Highly transparent */
+            background: rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(212, 175, 55, 0.4);
             border-radius: 24px;
-            backdrop-filter: blur(6px); /* Very light blur to keep text readable but background visible */
+            backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
             box-shadow: 0 25px 50px rgba(0,0,0,0.15);
             position: relative;
@@ -1238,7 +1238,7 @@
         }
 
         /* ============================================
-           FOOTER
+           FOOTER (Non-interfering, cleanly separated)
         ============================================ */
         footer {
             position: fixed;
@@ -1273,7 +1273,7 @@
         ============================================ */
         .share-fab {
             position: fixed;
-            bottom: 100px;
+            bottom: 110px; /* Moved up slightly to clear footer comfortably */
             right: 30px;
             width: 55px;
             height: 55px;
@@ -1531,7 +1531,7 @@
             .gallery-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
-                padding-bottom: 80px;
+                padding-bottom: 150px; /* Increased to prevent footer overlap */
             }
 
             .about-details {
@@ -1540,7 +1540,7 @@
             }
 
             .inner-page {
-                padding: 90px 6% 140px;
+                padding: 90px 6% 200px; /* Increased bottom padding for mobile */
             }
 
             .navbar {
@@ -1612,7 +1612,7 @@
             }
 
             .share-fab {
-                bottom: 95px;
+                bottom: 110px;
                 right: 20px;
                 width: 50px;
                 height: 50px;
@@ -1688,7 +1688,7 @@
                 grid-template-columns: 1fr;
                 max-width: 400px;
                 margin: 0 auto;
-                padding-bottom: 100px;
+                padding-bottom: 180px; /* Maximum padding for small screens */
             }
             
             footer {
