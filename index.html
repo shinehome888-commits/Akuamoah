@@ -91,6 +91,8 @@
             background-position: center center;
             background-repeat: no-repeat;
             z-index: -1;
+            /* Ensure background images always display */
+            background-attachment: scroll;
         }
 
         /* ============================================
@@ -214,7 +216,11 @@
 
         .home-bg {
             background-image: url('https://i.ibb.co/XftCv8nP/IMG-9513.jpg');
-            filter: brightness(0.85); 
+            filter: brightness(0.85);
+            /* Ensure image displays on all devices */
+            background-size: cover !important;
+            background-position: center center !important;
+            min-height: 100vh;
         }
 
         .home-overlay {
@@ -404,6 +410,8 @@
         #about .page-bg {
             background-image: url('https://i.ibb.co/wNyrNQ2B/IMG-9510.jpg');
             filter: brightness(0.9);
+            background-size: cover !important;
+            background-position: center center !important;
         }
 
         .about-container {
@@ -434,6 +442,8 @@
             height: 100%;
             object-fit: cover;
             animation: slideAcross 25s linear infinite;
+            /* Ensure image displays */
+            display: block;
         }
 
         @keyframes slideAcross {
@@ -512,6 +522,8 @@
         #music .page-bg {
             background-image: url('https://i.ibb.co/8ncS7tZW/IMG-9511-1.jpg');
             filter: brightness(0.9);
+            background-size: cover !important;
+            background-position: center center !important;
         }
 
         .music-container {
@@ -619,6 +631,7 @@
             border-radius: 4px;
             aspect-ratio: 1;
             cursor: pointer;
+            background: var(--gray-soft);
         }
 
         .gallery-item img {
@@ -626,6 +639,9 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.6s ease;
+            /* Ensure images display properly */
+            display: block;
+            min-height: 100%;
         }
 
         .gallery-item:hover img {
@@ -1098,6 +1114,8 @@
         #contact .page-bg {
             background-image: url('https://i.ibb.co/j9WmqNmZ/582d2b20-8acc-442f-a3f6-c4ff338aafca.jpg');
             filter: brightness(0.85);
+            background-size: cover !important;
+            background-position: center center !important;
         }
 
         .contact-page .section-title {
@@ -1757,7 +1775,7 @@
         </div>
         <div class="about-container">
             <div class="about-image">
-                <img src="https://i.ibb.co/G4syc8zy/Chat-GPT-Image-Jul-14-2026-02-37-28-AM-1.png" alt="Akuamoah Portrait">
+                <img src="https://i.ibb.co/G4syc8zy/Chat-GPT-Image-Jul-14-2026-02-37-28-AM-1.png" alt="Akuamoah Portrait" onerror="this.src='https://via.placeholder.com/400x500/D4AF37/111111?text=Akuamoah'">
             </div>
             <div class="about-text">
                 <h3>A Voice from <span>Ghana</span></h3>
@@ -1836,7 +1854,7 @@
         </div>
         <div class="gallery-grid">
             <div class="gallery-item" data-img-id="img1">
-                <img src="https://i.ibb.co/PGWdXcqb/IMG-9042.jpg" alt="Gallery 1">
+                <img src="https://i.ibb.co/PGWdXcqb/IMG-9042.jpg" alt="Gallery 1" onerror="this.src='https://via.placeholder.com/400x400/D4AF37/111111?text=Photo+1'">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -1858,7 +1876,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img2">
-                <img src="https://i.ibb.co/YTdXpscV/IMG-9043.jpg" alt="Gallery 2">
+                <img src="https://i.ibb.co/YTdXpscV/IMG-9043.jpg" alt="Gallery 2" onerror="this.src='https://via.placeholder.com/400x400/D4AF37/111111?text=Photo+2'">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -1880,7 +1898,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img3">
-                <img src="https://i.ibb.co/0yL75HXY/IMG-9044.jpg" alt="Gallery 3">
+                <img src="https://i.ibb.co/0yL75HXY/IMG-9044.jpg" alt="Gallery 3" onerror="this.src='https://via.placeholder.com/400x400/D4AF37/111111?text=Photo+3'">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -1902,7 +1920,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img4">
-                <img src="https://i.ibb.co/JRxBDsKr/IMG-9045.jpg" alt="Gallery 4">
+                <img src="https://i.ibb.co/JRxBDsKr/IMG-9045.jpg" alt="Gallery 4" onerror="this.src='https://via.placeholder.com/400x400/D4AF37/111111?text=Photo+4'">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -1924,7 +1942,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img5">
-                <img src="https://i.ibb.co/Q7nS9DpL/IMG-9046.jpg" alt="Gallery 5">
+                <img src="https://i.ibb.co/Q7nS9DpL/IMG-9046.jpg" alt="Gallery 5" onerror="this.src='https://via.placeholder.com/400x400/D4AF37/111111?text=Photo+5'">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -1946,7 +1964,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img6">
-                <img src="https://i.ibb.co/Df3r1Dz0/IMG-9047.jpg" alt="Gallery 6">
+                <img src="https://i.ibb.co/Df3r1Dz0/IMG-9047.jpg" alt="Gallery 6" onerror="this.src='https://via.placeholder.com/400x400/D4AF37/111111?text=Photo+6'">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -1968,7 +1986,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img7">
-                <img src="https://i.ibb.co/nqYvMhR5/IMG-9048.jpg" alt="Gallery 7">
+                <img src="https://i.ibb.co/nqYvMhR5/IMG-9048.jpg" alt="Gallery 7" onerror="this.src='https://via.placeholder.com/400x400/D4AF37/111111?text=Photo+7'">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -1990,7 +2008,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img8">
-                <img src="https://i.ibb.co/ycdDnmZS/IMG-9049.jpg" alt="Gallery 8">
+                <img src="https://i.ibb.co/ycdDnmZS/IMG-9049.jpg" alt="Gallery 8" onerror="this.src='https://via.placeholder.com/400x400/D4AF37/111111?text=Photo+8'">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -2012,7 +2030,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img9">
-                <img src="https://i.ibb.co/F44bFxM8/IMG-9052-1.jpg" alt="Gallery 9">
+                <img src="https://i.ibb.co/F44bFxM8/IMG-9052-1.jpg" alt="Gallery 9" onerror="this.src='https://via.placeholder.com/400x400/D4AF37/111111?text=Photo+9'">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
@@ -2034,7 +2052,7 @@
                 </div>
             </div>
             <div class="gallery-item" data-img-id="img10">
-                <img src="https://i.ibb.co/tTSXPrvh/IMG-9053-1.jpg" alt="Gallery 10">
+                <img src="https://i.ibb.co/tTSXPrvh/IMG-9053-1.jpg" alt="Gallery 10" onerror="this.src='https://via.placeholder.com/400x400/D4AF37/111111?text=Photo+10'">
                 <div class="gallery-overlay">
                     <div class="gallery-actions">
                         <button class="action-btn love-btn" data-action="love">
